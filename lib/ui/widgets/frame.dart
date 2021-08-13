@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/constants/constants.dart';
-import 'package:connecty/ui/screens/home/home_screen.dart';
 import 'package:connecty/ui/screens/search/search_screen.dart';
 import 'package:connecty/ui/screens/profile/profile_screen.dart';
 import 'package:connecty/ui/screens/contacts/contacts_screen.dart';
+import 'package:connecty/ui/screens/chat_list/chat_list_screen.dart';
 
 import 'nav_bar.dart';
 
@@ -53,7 +53,7 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
           body: PageView(
             children: <Widget>[
               ContactsScreen(),
-              HomeScreen(),
+              ChatListScreen(),
               SearchScreen(),
               ProfileScreen(),
             ],

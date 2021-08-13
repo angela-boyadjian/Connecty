@@ -30,6 +30,8 @@ dependencies:
   material_floating_search_bar: ^0.3.4
   easy_localization: ^3.0.0
   country_icons: ^2.0.2
+  shimmer: ^1.1.0
+  flutter_slidable: ^0.5.7
 
   authentication:
     path: lib/repositories/authentication

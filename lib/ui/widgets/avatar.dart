@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
   final String url;
-  final double _avatarSize = 80.0;
+  final double size;
   final File imageFile;
 
-  const Avatar({Key key, this.url, this.imageFile}) : super(key: key);
+  const Avatar({Key key, this.url, this.imageFile, this.size = 25.0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: _avatarSize,
+      radius: size,
       backgroundImage: url != null
           ? NetworkImage(url)
           : imageFile != null
               ? FileImage(imageFile)
               : null,
       child: url == null && imageFile == null
-          ? Icon(Icons.person_outline, size: _avatarSize)
+          ? Icon(Icons.person_outline, size: size)
           : null,
     );
   }
