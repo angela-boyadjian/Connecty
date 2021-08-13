@@ -1,64 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() {
-  runApp(MyApp());
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:users/users_repository.dart';
+import 'package:storage/storage_repository.dart';
+import 'package:authentication/authentication_repository.dart';
+
+import 'ui/theme.dart';
+import 'logic/bloc/bloc.dart';
+import 'logic/cubit/cubit.dart';
+import 'ui/router/app_router.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  final AppRouter _appRouter = AppRouter();
+  final AuthenticationRepository authenticationRepository =
+      AuthenticationRepository<FirebaseProvider>();
+  final UsersRepository usersRepository = UsersRepository();
+  final StorageRepository storageRepository = StorageRepository();
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  ThemeData getTheme(BuildContext context, PreferencesState state) {
+    if (state is PreferencesLoaded) {
+      context.watch<PreferencesCubit>().loadTheme();
+    }
+    if (state is PreferencesTheme) {
+      return state.theme ? lightTheme : darkTheme;
+    }
+    return darkTheme;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: authenticationRepository,
+        ),
+        RepositoryProvider.value(
+          value: usersRepository,
+        ),
+        RepositoryProvider.value(
+          value: storageRepository,
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthenticationBloc(
+                authenticationRepository: authenticationRepository),
+          ),
+          BlocProvider(create: (context) => PreferencesCubit()),
+          BlocProvider(
+            lazy: false,
+            create: (context) => UserBloc(
+                usersRepository: usersRepository,
+                authBloc: BlocProvider.of<AuthenticationBloc>(context)),
+          ),
+          BlocProvider(
+            lazy: false,
+            create: (context) =>
+                StorageBloc(storageRepository: storageRepository),
+          ),
+        ],
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+          },
+          child: BlocBuilder<PreferencesCubit, PreferencesState>(
+            builder: (context, state) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'AniList',
+                theme: getTheme(context, state),
+                onGenerateRoute: _appRouter.onGenerateRoute,
+              );
+            },
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

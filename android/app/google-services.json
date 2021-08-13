@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "799182822458",
+    "project_id": "connecty-278510",
+    "storage_bucket": "connecty-278510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799182822458:android:5070336e42e371371e2903",
+        "android_client_info": {
+          "package_name": "com.example.connecty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799182822458-p984hlk8v1u8ea0q24mv08hej4fov4dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.connecty",
+            "certificate_hash": "50032ccf1be9aee6e544b3c02b8151b053bdd3f7"
+          }
+        },
+        {
+          "client_id": "799182822458-5jgppc7q06v3tun7bddbhppji5d8gn6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa2XILWvBAlM2bhUKaaPMVz_mF8H0gyJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799182822458-5jgppc7q06v3tun7bddbhppji5d8gn6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
