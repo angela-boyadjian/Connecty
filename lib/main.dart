@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
 import 'package:storage/storage_repository.dart';
@@ -16,9 +16,17 @@ import 'ui/router/app_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await EasyLocalization.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(MyApp());
+    runApp(
+      EasyLocalization(
+        supportedLocales: [Locale('en', 'US'), Locale('fr', 'FR')],
+        path: 'assets/langs',
+        fallbackLocale: Locale('en', 'US'),
+        child: MyApp(),
+      ),
+    );
   });
 }
 
@@ -83,8 +91,11 @@ class MyApp extends StatelessWidget {
           child: BlocBuilder<PreferencesCubit, PreferencesState>(
             builder: (context, state) {
               return MaterialApp(
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
                 debugShowCheckedModeBanner: false,
-                title: 'AniList',
+                title: 'Connecty',
                 theme: getTheme(context, state),
                 onGenerateRoute: _appRouter.onGenerateRoute,
               );

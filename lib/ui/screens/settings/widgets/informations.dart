@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Informations extends StatelessWidget {
@@ -9,7 +9,7 @@ class Informations extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("Informations",
+          child: Text(tr("Informations"),
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
@@ -26,18 +26,7 @@ class Informations extends StatelessWidget {
                     Icons.lock,
                     color: Colors.green,
                   ),
-                  title: Text("Security"),
-                  trailing: Icon(Icons.arrow_right),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: ListTile(
-                  leading: Icon(
-                    Icons.credit_card,
-                    color: Colors.purple,
-                  ),
-                  title: Text("Payment"),
+                  title: Text(tr("Security")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -48,7 +37,7 @@ class Informations extends StatelessWidget {
                     FontAwesomeIcons.ad,
                     color: Colors.orange,
                   ),
-                  title: Text("Ads"),
+                  title: Text(tr("settings.Ads")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -59,7 +48,7 @@ class Informations extends StatelessWidget {
                     Icons.group,
                     color: Colors.green,
                   ),
-                  title: Text("Community Guidelines"),
+                  title: Text(tr("settings.community.Community_Guidelines")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -70,7 +59,7 @@ class Informations extends StatelessWidget {
                     FontAwesomeIcons.gavel,
                     color: Colors.lightGreen,
                   ),
-                  title: Text("Terms of Services"),
+                  title: Text(tr("settings.tos.Terms_of_Services")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -81,7 +70,7 @@ class Informations extends StatelessWidget {
                     Icons.visibility,
                     color: Colors.lime,
                   ),
-                  title: Text("Privacy Policy"),
+                  title: Text(tr("settings.privacy.Privacy_Policy")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -91,7 +80,7 @@ class Informations extends StatelessWidget {
                     Icons.help,
                     color: Colors.pink,
                   ),
-                  title: Text("Help"),
+                  title: Text(tr("settings.Help")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -100,7 +89,7 @@ class Informations extends StatelessWidget {
                   Icons.info,
                   color: Colors.grey,
                 ),
-                title: Text("About"),
+                title: Text(tr("settings.About")),
                 trailing: Text("Version 1.0"),
               )
             ],

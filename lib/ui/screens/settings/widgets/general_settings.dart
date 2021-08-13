@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
@@ -14,7 +15,7 @@ class GeneralSettings extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("General Settings",
+          child: Text(tr("settings.General_Settings"),
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
@@ -31,19 +32,28 @@ class GeneralSettings extends StatelessWidget {
                     FontAwesomeIcons.userAlt,
                     color: Colors.blue,
                   ),
-                  title: Text("Account"),
+                  title: Text(tr("settings.Account")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  var data = EasyLocalization.of(context);
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? data.setLocale(Locale("fr", "FR"))
+                      : data.setLocale(Locale("en", "US"));
+                },
                 child: ListTile(
                   leading: Icon(
                     FontAwesomeIcons.language,
                     color: Colors.lightGreen,
                   ),
-                  title: Text("Language"),
-                  trailing: Icon(Icons.arrow_right),
+                  title: Text(tr("Language")),
+                  trailing: Localizations.localeOf(context).languageCode == "en"
+                      ? Image.asset('icons/flags/png/gb.png',
+                          package: 'country_icons', height: 40, width: 40)
+                      : Image.asset('icons/flags/png/fr.png',
+                          package: 'country_icons', height: 40, width: 40),
                 ),
               ),
               ListTile(
@@ -51,7 +61,7 @@ class GeneralSettings extends StatelessWidget {
                   FontAwesomeIcons.solidSun,
                   color: Colors.amber[800],
                 ),
-                title: Text('Light Theme'),
+                title: Text(tr('settings.Light_Theme')),
                 trailing: BlocBuilder<PreferencesCubit, PreferencesState>(
                   builder: (context, state) {
                     return Switch(
@@ -75,7 +85,7 @@ class GeneralSettings extends StatelessWidget {
                       Icons.exit_to_app,
                       color: Colors.red,
                     ),
-                    title: Text("Logout"),
+                    title: Text(tr("Logout")),
                     trailing: Icon(Icons.arrow_right),
                   )),
             ],

@@ -6,6 +6,7 @@ import 'package:connecty/constants/constants.dart';
 import 'package:connecty/ui/screens/home/home_screen.dart';
 import 'package:connecty/ui/screens/search/search_screen.dart';
 import 'package:connecty/ui/screens/profile/profile_screen.dart';
+import 'package:connecty/ui/screens/contacts/contacts_screen.dart';
 
 import 'nav_bar.dart';
 
@@ -51,6 +52,7 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
           key: _scaffoldKey,
           body: PageView(
             children: <Widget>[
+              ContactsScreen(),
               HomeScreen(),
               SearchScreen(),
               ProfileScreen(),

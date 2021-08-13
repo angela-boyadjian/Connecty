@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/constants/constants.dart';
@@ -20,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         leading: Container(),
         centerTitle: true,
-        title: Text('Profile',
+        title: Text(tr('Profile'),
             style: textTheme.headline5.copyWith(color: Colors.white)),
         actions: [
           IconButton(

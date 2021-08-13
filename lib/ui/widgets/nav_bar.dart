@@ -27,15 +27,21 @@ class NavBar extends StatelessWidget {
       height: 50.0,
       items: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(right: 2.0, bottom: 2.0),
-          child: Icon(FontAwesomeIcons.trophy,
-              size: activeTab == TabScreens.Home ? iconSize + 4 : iconSize,
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: Icon(FontAwesomeIcons.solidAddressBook,
+              size: activeTab == TabScreens.Contacts ? iconSize + 4 : iconSize,
+              color: iconColor),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: Icon(FontAwesomeIcons.solidComment,
+              size: activeTab == TabScreens.Home ? iconSize + 5 : iconSize,
               color: iconColor),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 2.0),
           child: Icon(FontAwesomeIcons.search,
-              size: activeTab == TabScreens.Search ? iconSize + 5 : iconSize,
+              size: activeTab == TabScreens.Search ? iconSize + 4 : iconSize,
               color: iconColor),
         ),
         Padding(

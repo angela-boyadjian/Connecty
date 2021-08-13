@@ -1,7 +1,8 @@
 // Enums
 enum TabScreens {
-  Search,
+  Contacts,
   Home,
+  Search,
   Profile,
 }
 

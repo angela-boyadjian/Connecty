@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class NotificationSettings extends StatelessWidget {
   @override
@@ -7,7 +8,7 @@ class NotificationSettings extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("Notifications",
+          child: Text(tr("settings.Notifications"),
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
@@ -22,7 +23,7 @@ class NotificationSettings extends StatelessWidget {
                   Icons.pause,
                   color: Colors.amber,
                 ),
-                title: Text('Pause All'),
+                title: Text(tr('settings.Pause_All')),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
               ListTile(
@@ -30,7 +31,7 @@ class NotificationSettings extends StatelessWidget {
                   Icons.favorite,
                   color: Colors.pink,
                 ),
-                title: Text("Likes"),
+                title: Text(tr("settings.Likes")),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
               ListTile(
@@ -38,7 +39,7 @@ class NotificationSettings extends StatelessWidget {
                   Icons.star,
                   color: Colors.green,
                 ),
-                title: Text("Follow"),
+                title: Text(tr("settings.Follow")),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
               ListTile(
@@ -46,7 +47,7 @@ class NotificationSettings extends StatelessWidget {
                   Icons.message,
                   color: Colors.grey,
                 ),
-                title: Text("Messages"),
+                title: Text(tr("settings.Messages")),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
             ],

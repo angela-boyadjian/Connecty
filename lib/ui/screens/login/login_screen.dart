@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
 
@@ -130,20 +131,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextField(
                       controller: emailController,
                       style: textTheme.subtitle1,
-                      decoration: textFieldDecoration('Email'),
+                      decoration: textFieldDecoration(tr('Email')),
                     ),
                     SizedBox(height: 25.0),
                     TextField(
                       controller: passwordController,
                       obscureText: true,
                       style: textTheme.subtitle1,
-                      decoration: textFieldDecoration('Password'),
+                      decoration: textFieldDecoration(tr('Password')),
                     ),
                     SizedBox(
                       height: 35.0,
                     ),
                     AuthButton(
-                        text: 'Login',
+                        text: tr('Login'),
                         onPressed: () => context
                             .read<LoginCubit>()
                             .logInWithCredentials(
@@ -156,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             horizontalLine(),
-                            Text('OR',
+                            Text(tr('OR'),
                                 style:
                                     textTheme.subtitle1.copyWith(fontSize: 14)),
                             horizontalLine()
@@ -166,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 15.0),
                     AuthButton(
-                        text: 'Register',
+                        text: tr('Register'),
                         onPressed: () =>
                             Navigator.of(context).pushNamed(registerRoute)),
                     SizedBox(height: 60.0),

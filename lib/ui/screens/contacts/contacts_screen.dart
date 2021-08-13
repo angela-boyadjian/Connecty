@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+class ContactsScreen extends StatefulWidget {
+  ContactsScreen({Key key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ContactsScreenState createState() => _ContactsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text(
-          "Home",
+          'CONTACTS SCREEN',
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
