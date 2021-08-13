@@ -17,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildAppBar() => AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
-            icon: Icon(FontAwesomeIcons.arrowLeft),
+            icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white),
             onPressed: () => Navigator.of(context).pop()),
         centerTitle: true,
         title: Text('Settings',
