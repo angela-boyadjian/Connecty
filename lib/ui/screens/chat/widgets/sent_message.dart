@@ -5,6 +5,7 @@ class SentMessage extends StatelessWidget {
   final String imageAddress;
   final String time;
   final bool isImage;
+
   const SentMessage({
     Key key,
     this.content,
@@ -15,6 +16,29 @@ class SentMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget _buildImage() {
+      return Padding(
+        padding: const EdgeInsets.only(
+            right: 12.0, left: 23.0, top: 8.0, bottom: 15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              child: Image.asset(
+                imageAddress,
+                height: 130,
+                width: 130,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(content)
+          ],
+        ),
+      );
+    }
+
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -32,34 +56,9 @@ class SentMessage extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(
                           right: 12.0, left: 23.0, top: 8.0, bottom: 15.0),
-                      child: Text(
-                        content,
-                      ),
+                      child: Text(content),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.only(
-                          right: 12.0, left: 23.0, top: 8.0, bottom: 15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            child: Image.asset(
-                              imageAddress,
-                              height: 130,
-                              width: 130,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            content,
-                          )
-                        ],
-                      ),
-                    ),
+                  : _buildImage(),
               Positioned(
                 bottom: 1,
                 left: 10,

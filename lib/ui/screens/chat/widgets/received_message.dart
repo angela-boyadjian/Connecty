@@ -5,6 +5,7 @@ class ReceivedMessage extends StatelessWidget {
   final String imageAddress;
   final String time;
   final bool isImage;
+
   const ReceivedMessage({
     Key key,
     this.content,
@@ -15,6 +16,29 @@ class ReceivedMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget _buildImage() {
+      return Padding(
+        padding: const EdgeInsets.only(
+            right: 8.0, left: 8.0, top: 8.0, bottom: 15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              child: Image.asset(
+                imageAddress,
+                height: 130,
+                width: 130,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(content)
+          ],
+        ),
+      );
+    }
+
     return Container(
         child: Padding(
       padding:
@@ -33,41 +57,17 @@ class ReceivedMessage extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(
                           right: 8.0, left: 8.0, top: 8.0, bottom: 15.0),
-                      child: Text(
-                        content,
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(
-                          right: 8.0, left: 8.0, top: 8.0, bottom: 15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            child: Image.asset(
-                              imageAddress,
-                              height: 130,
-                              width: 130,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            content,
-                          )
-                        ],
-                      ),
-                    ),
+                      child: Text(content))
+                  : _buildImage(),
               Positioned(
                 bottom: 1,
                 right: 10,
                 child: Text(
                   time,
                   style: TextStyle(
-                      fontSize: 10, color: Colors.black.withOpacity(0.6)),
+                    fontSize: 10,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
                 ),
               )
             ],

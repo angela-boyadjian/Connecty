@@ -20,11 +20,17 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController _text = new TextEditingController();
+  TextEditingController _text = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
   }
 
   Widget _lastMessageDate() {
@@ -68,7 +74,11 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(_text.text);
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    _text.clear();
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.image),
