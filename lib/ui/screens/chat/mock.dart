@@ -23,7 +23,7 @@ const List<Widget> childList = <Widget>[
   Align(
     alignment: Alignment(-1, 0),
     child: ReceivedMessage(
-      content: 'Hello, Angela.I am fine. How are you?',
+      content: 'Hello, Angela. I am fine. How are you?',
       time: '22:40 PM',
       isImage: false,
     ),
