@@ -38,19 +38,23 @@ class _ChatListScreenState extends State<ChatListScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: _buildAppBar(),
-        body: Container(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(0.3),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0),
+                ),
               ),
-            ),
-            child: ListView.builder(
-              itemCount: mock.items.length,
-              itemBuilder: (BuildContext context, int index) {
-                return mock.items[index];
-              },
+              child: ListView.builder(
+                itemCount: mock.items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return mock.items[index];
+                },
+              ),
             ),
           ),
         ),
