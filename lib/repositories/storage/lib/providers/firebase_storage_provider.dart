@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:storage/models/image.dart';
 
@@ -31,17 +30,6 @@ class FirebaseStorageProvider extends AProvider {
       throw Exception();
     });
     return url;
-  }
-
-  Future<List<String>> fetchFavList(String id) async {
-    var list;
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .get()
-        .then((snapshot) => list = snapshot['favs']);
-    print(list);
-    return list;
   }
 
   saveAsBytes(Uint8List bytes, String s) {}

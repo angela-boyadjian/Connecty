@@ -12,7 +12,4 @@ class StorageRepository {
 
   Future<String> uploadImage(ImageModel image) async =>
       await _provider.uploadImage(image);
-
-  Future<List<String>> fetchFavList(String id) async =>
-      await _provider.fetchFavList(id);
 }
