@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 import 'widgets/received_message.dart';
 import 'widgets/sent_message.dart';
 
+class Message {
+  final String id;
+  final String content;
+  final String time;
+
+  const Message(
+    this.id,
+    this.content,
+    this.time,
+  );
+}
+
 const List<Widget> childList = <Widget>[
   Align(
     alignment: Alignment(1, 0),
