@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/ui/widgets/avatar.dart';
 import 'package:connecty/constants/constants.dart';
+import 'package:connecty/ui/widgets/custom_progress_indicator.dart';
 
-import './mock.dart' as mock;
 import 'widgets/chat_list_item.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -15,14 +16,6 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
-  ChatListBloc _chatListBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _chatListBloc = BlocProvider.of<ChatListBloc>(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = context.select((UserBloc bloc) => bloc.state.user);
@@ -49,7 +42,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           builder: (context, state) {
         switch (state.status) {
           case ChatStatus.Initial:
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CustomProgressIndicator());
           case ChatStatus.Error:
             return Center(child: Text('Failed to fetch chats'));
           case ChatStatus.Success:
@@ -61,7 +54,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   lastMessage: state.chats[index].lastMsgContent,
                   name: state.chats[index].usernames[0],
                   newMesssageCount: state.chats[index].unread,
-                  time: state.chats[index].lastMsgDate.toIso8601String(),
+                  time: timeago.format(state.chats[index].lastMsgDate),
                 );
               },
             );
