@@ -30,8 +30,8 @@ class ChatListItem extends StatelessWidget {
     Widget _buildUnreadBox() {
       return Container(
         margin: const EdgeInsets.only(top: 5.0),
-        height: 18,
-        width: 18,
+        height: 18.0,
+        width: 18.0,
         decoration: BoxDecoration(
             color: Color(0xFFFF8C00),
             borderRadius: BorderRadius.all(

@@ -2,56 +2,57 @@ import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message extends Equatable {
-  final String id;
   final String content;
-  final String time;
+  final bool isLiked;
+  final String mediaUrl;
+  final String senderId;
+  final String targetId;
+  final DateTime time;
+  final bool wasSeen;
 
-  const Message(
-    this.id,
-    this.content,
-    this.time,
-  );
+  const Message(this.content, this.isLiked, this.mediaUrl, this.senderId,
+      this.targetId, this.time, this.wasSeen);
 
   Message.fromData(Map<String, dynamic> data)
-      : id = data['id'],
-        content = data['content'],
-        time = data['time'];
-
-  Map<String, Object> toJson() {
-    return {
-      'id': id,
-      'content': content,
-      'time': time,
-    };
-  }
-
-  static Message fromJson(Map<String, Object> json) {
-    return Message(
-      json['id'] as String,
-      json['content'] as String,
-      json['time'] as String,
-    );
-  }
+      : content = data['content'],
+        isLiked = data['isLiked'],
+        mediaUrl = data['mediaUrl'],
+        senderId = data['senderId'],
+        targetId = data['targetId'],
+        time = data['time'],
+        wasSeen = data['wasSeen'];
 
   static Message fromSnapshot(DocumentSnapshot snap) {
     return Message(
-      snap.id,
-      snap.data()!['content'],
-      snap.data()!['time'],
+      snap.data()['content'],
+      snap.data()['isLiked'],
+      snap.data()['mediaUrl'],
+      snap.data()['senderId'],
+      snap.data()['targetId'],
+      snap.data()['time'],
+      snap.data()['wasSeen'],
     );
   }
 
   Map<String, Object> toDocument() {
     return {
-      'id': id,
       'content': content,
+      'isLiked': isLiked,
+      'mediaUrl': mediaUrl,
+      'senderId': senderId,
+      'targetId': targetId,
       'time': time,
+      'wasSeen': wasSeen,
     };
   }
 
   List<Object> get props => [
-        this.id,
         this.content,
+        this.isLiked,
+        this.mediaUrl,
+        this.senderId,
+        this.targetId,
         this.time,
+        this.wasSeen
       ];
 }

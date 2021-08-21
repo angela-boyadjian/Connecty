@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:connecty/ui/screens/chat/mock.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/constants/constants.dart';
 
 part 'chat_state.dart';

@@ -7,6 +7,7 @@ class User extends Equatable {
   final String email;
   final String photo;
   final String bio;
+  final List<String> chats;
 
   const User(
     this.id,
@@ -14,13 +15,15 @@ class User extends Equatable {
     this.name,
     this.photo,
     this.bio,
+    this.chats,
   );
   User.fromData(Map<String, dynamic> data)
       : id = data['id'],
         name = data['name'],
         email = data['email'],
         photo = data['photo'],
-        bio = data['bio'];
+        bio = data['bio'],
+        chats = data['chats'];
 
   Map<String, Object> toJson() {
     return {
@@ -29,6 +32,7 @@ class User extends Equatable {
       'email': email,
       'photo': photo,
       'bio': bio,
+      'chats': chats,
     };
   }
 
@@ -39,6 +43,7 @@ class User extends Equatable {
       json['email'] as String,
       json['photo'] as String,
       json['bio'] as String,
+      json['chats'] as List<String>,
     );
   }
 
@@ -49,6 +54,7 @@ class User extends Equatable {
       snap.data()['email'],
       snap.data()['photo'],
       snap.data()['bio'],
+      snap.data()['chats'],
     );
   }
 
@@ -59,6 +65,7 @@ class User extends Equatable {
       'email': email,
       'photo': photo,
       'bio': bio,
+      'chats': chats,
     };
   }
 
@@ -68,5 +75,6 @@ class User extends Equatable {
         this.name,
         this.photo,
         this.bio,
+        this.chats,
       ];
 }
