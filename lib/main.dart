@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:data/data_repository.dart';
 import 'package:users/users_repository.dart';
 import 'package:storage/storage_repository.dart';
 import 'package:authentication/authentication_repository.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       AuthenticationRepository<FirebaseProvider>();
   final UsersRepository usersRepository = UsersRepository();
   final StorageRepository storageRepository = StorageRepository();
+  final DataRepository dataRepository = DataRepository();
 
   ThemeData getTheme(BuildContext context, PreferencesState state) {
     if (state is PreferencesLoaded) {
@@ -60,6 +62,12 @@ class MyApp extends StatelessWidget {
         RepositoryProvider.value(
           value: storageRepository,
         ),
+        RepositoryProvider.value(
+          value: storageRepository,
+        ),
+        RepositoryProvider.value(
+          value: dataRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -79,6 +87,10 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 StorageBloc(storageRepository: storageRepository),
           ),
+          BlocProvider(
+              lazy: false,
+              create: (context) =>
+                  ChatListBloc(dataRepository: dataRepository)),
         ],
         child: GestureDetector(
           onTap: () {

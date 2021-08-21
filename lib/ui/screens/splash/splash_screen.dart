@@ -27,7 +27,10 @@ class SplashScreen extends StatelessWidget {
         case AuthenticationStatus.Authenticated:
           return BlocProvider(
             create: (context) => TabBloc(),
-            child: Frame(),
+            child: BlocProvider.value(
+              value: context.read<ChatListBloc>(),
+              child: Frame(),
+            ),
           );
         case AuthenticationStatus.Unauthenticated:
           return BlocProvider(

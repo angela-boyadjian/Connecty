@@ -1,7 +1,8 @@
-import 'package:data/models/message.dart';
 import 'package:data/models/chat.dart';
+import 'package:data/models/message.dart';
 
 class SendMessageFailure implements Exception {}
+
 class GetChatsFailure implements Exception {}
 
 abstract class AProvider {

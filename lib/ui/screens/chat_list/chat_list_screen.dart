@@ -4,8 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/ui/widgets/avatar.dart';
+import 'package:connecty/constants/constants.dart';
 
 import './mock.dart' as mock;
+import 'widgets/chat_list_item.dart';
 
 class ChatListScreen extends StatefulWidget {
   @override
@@ -13,6 +15,14 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
+  ChatListBloc _chatListBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _chatListBloc = BlocProvider.of<ChatListBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = context.select((UserBloc bloc) => bloc.state.user);
@@ -34,6 +44,33 @@ class _ChatListScreenState extends State<ChatListScreen> {
           ),
         );
 
+    _buildChats() {
+      return BlocBuilder<ChatListBloc, ChatListState>(
+          builder: (context, state) {
+        switch (state.status) {
+          case ChatStatus.Initial:
+            return Center(child: CircularProgressIndicator());
+          case ChatStatus.Error:
+            return Center(child: Text('Failed to fetch chats'));
+          case ChatStatus.Success:
+            return ListView.builder(
+              itemCount: state.chats.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ChatListItem(
+                  hasUnreadMessage: state.chats[index].unread > 0,
+                  lastMessage: state.chats[index].lastMsgContent,
+                  name: state.chats[index].usernames[0],
+                  newMesssageCount: state.chats[index].unread,
+                  time: state.chats[index].lastMsgDate.toIso8601String(),
+                );
+              },
+            );
+          default:
+            return Center(child: CircularProgressIndicator());
+        }
+      });
+    }
+
     return Container(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -49,12 +86,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   topRight: Radius.circular(15.0),
                 ),
               ),
-              child: ListView.builder(
-                itemCount: mock.items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return mock.items[index];
-                },
-              ),
+              child: _buildChats(),
             ),
           ),
         ),

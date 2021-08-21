@@ -89,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
             case UserStatus.NoUser:
               final user =
                   BlocProvider.of<AuthenticationBloc>(context).state.user;
-              BlocProvider.of<UserBloc>(context).add(AddUser(User(
-                  user.id, user.email, user.name, user.photo, 'new user')));
+              BlocProvider.of<UserBloc>(context).add(AddUser(User(user.id,
+                  user.email, user.name, user.photo, 'new user', null)));
               break;
             case UserStatus.Error:
               print('Failed to get user in DB');

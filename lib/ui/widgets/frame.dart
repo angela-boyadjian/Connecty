@@ -46,6 +46,8 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserBloc>().state.user;
+
     return BlocBuilder<TabBloc, TabScreens>(
       builder: (context, activeTab) {
         return Scaffold(
@@ -53,7 +55,10 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
           body: PageView(
             children: <Widget>[
               ContactsScreen(),
-              ChatListScreen(),
+              BlocProvider.value(
+                value: context.read<ChatListBloc>()..add(GetChats(user.chats)),
+                child: ChatListScreen(),
+              ),
               SearchScreen(),
               ProfileScreen(),
             ],

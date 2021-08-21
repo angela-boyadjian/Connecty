@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Chat extends Equatable {
   final String id;
@@ -27,15 +27,15 @@ class Chat extends Equatable {
 
   Chat.fromData(Map<String, dynamic> data)
       : id = data['id'],
-        avatars = data['avatars'],
+        avatars = List<String>.from(data['avatars']),
         lastMsgContent = data['lastMsgContent'],
-        lastMsgDate = data['lastMsgDate'],
+        lastMsgDate = data['lastMsgDate'].toDate(),
         lastMsgSenderId = data['lastMsgSenderId'],
-        participantsId = data['participantsId'],
+        participantsId = List<String>.from(data['participantsId']),
         totalMsgs = data['totalMsgs'],
         type = data['type'],
         unread = data['unread'],
-        usernames = data['usernames'];
+        usernames = List<String>.from(data['usernames']);
 
   Map<String, Object> toJson() {
     return {

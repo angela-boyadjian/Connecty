@@ -5,10 +5,10 @@ abstract class ChatListEvent extends Equatable {
 }
 
 class GetChats extends ChatListEvent {
-  final List<Chat> chats;
+  final List<String> chatsId;
 
-  const GetChats(this.chats);
+  const GetChats(this.chatsId);
 
   @override
-  List<Object> get props => [this.chats];
+  List<Object> get props => [this.chatsId];
 }
