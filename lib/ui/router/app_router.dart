@@ -1,3 +1,4 @@
+import 'package:connecty/ui/screens/profile_edit/profile_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -52,6 +53,15 @@ class AppRouter {
       case profileRoute:
         return MaterialPageRoute(
           builder: (_) => ProfileScreen(),
+        );
+      case profileEditRoute:
+        return PageTransition(
+          child: BlocProvider(
+            create: (_) => ImageCubit(),
+            child: ProfileEditScreen(),
+          ),
+          type: PageTransitionType.bottomToTop,
+          duration: Duration(milliseconds: 400),
         );
       case settingsRoute:
         return MaterialPageRoute(

@@ -29,6 +29,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       );
 
+  Widget _buildBottomBar() => BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(30.0),
+            color: Colors.redAccent,
+            child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width,
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(profileEditRoute),
+              child: Text(
+                'EDIT',
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -43,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
-                child: Avatar(url: user?.photo, size: 80.0),
+                child: Avatar(url: user?.photo, size: 70.0),
               ),
               SizedBox(height: 20.0),
               Text(user?.name ?? '',
@@ -57,6 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: _buildBottomBar(),
     );
   }
 }

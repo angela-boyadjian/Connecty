@@ -27,6 +27,7 @@ const String loginRoute = '/login';
 const String profileRoute = '/profile';
 const String registerRoute = '/register';
 const String settingsRoute = '/settings';
+const String profileEditRoute = '/profileEdit';
 
 // Preferences
 const String themePref = 'theme';
