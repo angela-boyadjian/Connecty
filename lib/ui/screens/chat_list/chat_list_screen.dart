@@ -1,7 +1,5 @@
-import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
@@ -19,12 +17,6 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
-  int getContactIndex(User user, Chat chat) {
-    if (chat.usernames[0] == user.name) return 1;
-
-    return 0;
-  }
-
   AppBar _buildAppBar(User user) {
     return AppBar(
       elevation: 0,
@@ -57,17 +49,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           return ListView.builder(
             itemCount: state.chats.length,
             itemBuilder: (BuildContext context, int index) {
-              int contactIndex = getContactIndex(user, state.chats[index]);
-
-              return ChatListItem(
-                isYou: state.chats[index].lastMsgSenderId == user.id,
-                url: state.chats[index].avatars[contactIndex],
-                hasUnreadMessage: state.chats[index].unread > 0,
-                lastMessage: state.chats[index].lastMsgContent,
-                name: state.chats[index].usernames[contactIndex],
-                newMesssageCount: state.chats[index].unread,
-                time: timeago.format(state.chats[index].lastMsgDate),
-              );
+              return ChatListItem(chat: state.chats[index]);
             },
           );
         default:

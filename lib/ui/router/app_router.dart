@@ -1,4 +1,6 @@
+import 'package:connecty/ui/screens/chat/chat_screen.dart';
 import 'package:connecty/ui/screens/profile_edit/profile_edit_screen.dart';
+import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -49,6 +51,14 @@ class AppRouter {
             create: (context) => TabBloc(),
             child: Frame(),
           ),
+        );
+      case chatRoute:
+        final Chat chat = settings.arguments as Chat;
+
+        return PageTransition(
+          child: ChatScreen(chat: chat),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 400),
         );
       case profileRoute:
         return MaterialPageRoute(

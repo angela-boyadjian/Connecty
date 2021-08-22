@@ -1,34 +1,26 @@
-import 'dart:io';
-
-import 'package:connecty/ui/widgets/avatar.dart';
+import 'package:connecty/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:connecty/logic/bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-import 'package:connecty/ui/screens/chat/chat_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:data/data_repository.dart';
+import 'package:users/users_repository.dart';
+import 'package:connecty/ui/widgets/avatar.dart';
+import 'package:connecty/ui/screens/chat/chat_screen.dart';
+
 class ChatListItem extends StatelessWidget {
-  final String name;
-  final String lastMessage;
-  final File image;
-  final String url;
-  final String time;
-  final bool hasUnreadMessage;
-  final int newMesssageCount;
-  final bool isYou;
+  final Chat chat;
 
   const ChatListItem({
     Key key,
-    this.image,
-    this.name,
-    this.lastMessage,
-    this.time,
-    this.hasUnreadMessage,
-    this.newMesssageCount,
-    this.url,
-    this.isYou,
+    this.chat,
   }) : super(key: key);
+
+  int getContactIndex(User user) => chat.usernames[0] == user.name ? 1 : 0;
 
   Widget _buildUnreadBox() {
     return Container(
@@ -37,63 +29,56 @@ class ChatListItem extends StatelessWidget {
       width: 18.0,
       decoration: BoxDecoration(
           color: Color(0xFFFF8C00),
-          borderRadius: BorderRadius.all(
-            Radius.circular(25.0),
-          )),
+          borderRadius: BorderRadius.all(Radius.circular(25.0))),
       child: Center(
           child: Text(
-        newMesssageCount.toString(),
+        chat.unread.toString(),
         style: TextStyle(fontSize: 11),
       )),
     );
   }
 
-  Widget _buildChatInfos(BuildContext context) {
+  Widget _buildChatInfos(BuildContext context, bool isUnread) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          time,
+          timeago.format(chat.lastMsgDate),
           style: Theme.of(context).textTheme.bodyText1.copyWith(
               fontSize: 12.0,
-              fontWeight:
-                  hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
+              fontWeight: isUnread ? FontWeight.bold : FontWeight.normal),
         ),
-        hasUnreadMessage ? _buildUnreadBox() : SizedBox()
+        isUnread ? _buildUnreadBox() : SizedBox()
       ],
     );
   }
 
   Widget _buildTile(BuildContext context) {
+    final user = context.select((UserBloc bloc) => bloc.state.user);
+    final int contactIndex = getContactIndex(user);
+    final bool isUnread = chat.unread > 0;
+
     return ListTile(
       title: Text(
-        name,
+        chat.usernames[contactIndex],
         style: Theme.of(context).textTheme.bodyText1.copyWith(
             fontSize: 16.0,
-            fontWeight: hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
+            fontWeight: isUnread ? FontWeight.bold : FontWeight.normal),
       ),
       subtitle: Text(
-        isYou ? tr('You') + ': ' + lastMessage : lastMessage,
+        chat.lastMsgSenderId == user.id
+            ? tr('You') + ': ' + chat.lastMsgContent
+            : chat.lastMsgContent,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.bodyText1.copyWith(
             fontSize: 12.0,
-            fontWeight: hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
+            fontWeight: isUnread ? FontWeight.bold : FontWeight.normal),
       ),
-      leading: Avatar(
-        imageFile: image,
-        url: url,
-      ),
-      trailing: _buildChatInfos(context),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(username: name),
-          ),
-        );
-      },
+      leading: Avatar(url: chat.avatars[contactIndex]),
+      trailing: _buildChatInfos(context, isUnread),
+      onTap: () => Navigator.of(context).pushNamed(chatRoute, arguments: chat),
     );
   }
 
