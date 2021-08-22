@@ -136,6 +136,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final int contactIndex = getContactIndex(user);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Container(
           child: Stack(
@@ -144,7 +145,8 @@ class _ChatScreenState extends State<ChatScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Header(widget.chat.usernames[contactIndex]),
+                  Header(widget.chat.usernames[contactIndex],
+                      widget.chat.avatars[contactIndex]),
                   _buildChat(),
                   Divider(height: 0.0, color: Colors.black26),
                   _sendMessageTextField(),

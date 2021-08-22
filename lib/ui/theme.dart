@@ -8,7 +8,7 @@ final darkTheme = ThemeData(
     displayColor: Colors.white,
   ),
   primarySwatch: Colors.grey,
-  primaryColor: Color(0xFF7A9BEE),
+  primaryColor: Color(0xFF10477a),
   brightness: Brightness.dark,
   backgroundColor: const Color(0xFF212121),
   accentColor: const Color(0xFF0097A7),
@@ -20,7 +20,7 @@ final darkTheme = ThemeData(
 final lightTheme = ThemeData(
   textTheme: GoogleFonts.openSansTextTheme(),
   primarySwatch: Colors.blueGrey,
-  primaryColor: Color(0xFF7A9BEE),
+  primaryColor: Color(0xFF10477a),
   brightness: Brightness.light,
   backgroundColor: const Color(0xFFFFFFFE),
   accentColor: const Color(0xFFB2EBF2),
