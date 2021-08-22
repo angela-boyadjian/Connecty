@@ -48,14 +48,17 @@ class ChatListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildChatInfos() {
+  Widget _buildChatInfos(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           time,
-          style: TextStyle(fontSize: 12),
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontSize: 12.0,
+              fontWeight:
+                  hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
         ),
         hasUnreadMessage ? _buildUnreadBox() : SizedBox()
       ],
@@ -66,19 +69,23 @@ class ChatListItem extends StatelessWidget {
     return ListTile(
       title: Text(
         name,
-        style: TextStyle(fontSize: 16),
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+            fontSize: 16.0,
+            fontWeight: hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
       ),
       subtitle: Text(
         isYou ? tr('You') + ': ' + lastMessage : lastMessage,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: 12),
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+            fontSize: 12.0,
+            fontWeight: hasUnreadMessage ? FontWeight.bold : FontWeight.normal),
       ),
       leading: Avatar(
         imageFile: image,
         url: url,
       ),
-      trailing: _buildChatInfos(),
+      trailing: _buildChatInfos(context),
       onTap: () {
         Navigator.push(
           context,
