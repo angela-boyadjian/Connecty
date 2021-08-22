@@ -56,7 +56,7 @@ class _FrameState extends State<Frame> with SingleTickerProviderStateMixin {
             children: <Widget>[
               ContactsScreen(),
               BlocProvider.value(
-                value: context.read<ChatListBloc>()..add(GetChats(user.chats)),
+                value: context.read<ChatListBloc>()..add(GetChats(user?.chats)),
                 child: ChatListScreen(),
               ),
               SearchScreen(),

@@ -17,7 +17,7 @@ class FirestoreProvider extends AProvider {
   Future<List<Chat>> getChats(List<String> chatsId) async {
     try {
       List<Chat> chats = [];
-      for (int i = 0; i < chatsId.length; ++i) {
+      for (int i = 0; i < chatsId?.length; ++i) {
         DocumentSnapshot chat = await chatsCollection.doc(chatsId[i]).get();
         chats.add(Chat.fromData(chat.data()));
       }

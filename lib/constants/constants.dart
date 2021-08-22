@@ -16,7 +16,7 @@ enum AuthenticationStatus {
 
 enum UserStatus { Initial, Loading, Success, Error, NoUser }
 
-enum ChatStatus { Initial, Loading, Success, Error }
+enum ChatStatus { Initial, Loading, Success, Error, Empty }
 
 enum StorageStatus { Initial, Loading, UploadSuccess, DownloadSuccess, Error }
 

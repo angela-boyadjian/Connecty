@@ -51,6 +51,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
           return Center(child: CustomProgressIndicator());
         case ChatStatus.Error:
           return Center(child: Text('Failed to fetch chats'));
+        case ChatStatus.Empty:
+          return Center(child: Text("You don't have chats yet."));
         case ChatStatus.Success:
           return ListView.builder(
             itemCount: state.chats.length,

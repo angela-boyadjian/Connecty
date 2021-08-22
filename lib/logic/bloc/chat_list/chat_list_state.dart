@@ -10,6 +10,8 @@ class ChatListState extends Equatable {
 
   const ChatListState.loading() : this._(status: ChatStatus.Loading);
 
+  const ChatListState.empty() : this._(status: ChatStatus.Empty);
+
   const ChatListState.success(List<Chat> chats)
       : this._(chats: chats, status: ChatStatus.Success);
 

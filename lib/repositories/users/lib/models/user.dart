@@ -23,7 +23,7 @@ class User extends Equatable {
         email = data['email'],
         photo = data['photo'],
         bio = data['bio'],
-        chats = List<String>.from(data['chats']);
+        chats = data['chats'] != null ? List<String>.from(data['chats']) : null;
 
   Map<String, Object> toJson() {
     return {
