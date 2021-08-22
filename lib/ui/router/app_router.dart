@@ -1,7 +1,5 @@
-import 'package:connecty/ui/screens/chat/chat_screen.dart';
-import 'package:connecty/ui/screens/profile_edit/profile_edit_screen.dart';
-import 'package:data/data_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:data/data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -11,11 +9,13 @@ import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/ui/widgets/frame.dart';
 import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:connecty/constants/constants.dart';
+import 'package:connecty/ui/screens/chat/chat_screen.dart';
 import 'package:connecty/ui/screens/login/login_screen.dart';
 import 'package:connecty/ui/screens/splash/splash_screen.dart';
 import 'package:connecty/ui/screens/profile/profile_screen.dart';
 import 'package:connecty/ui/screens/settings/settings_screen.dart';
 import 'package:connecty/ui/screens/register/register_screen.dart';
+import 'package:connecty/ui/screens/profile_edit/profile_edit_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -56,7 +56,11 @@ class AppRouter {
         final Chat chat = settings.arguments as Chat;
 
         return PageTransition(
-          child: ChatScreen(chat: chat),
+          child: BlocProvider(
+            create: (_) => ChatBloc(dataRepository: _.read<DataRepository>())
+              ..add(GetMessages(chat.id)),
+            child: ChatScreen(chat: chat),
+          ),
           type: PageTransitionType.fade,
           duration: Duration(milliseconds: 400),
         );

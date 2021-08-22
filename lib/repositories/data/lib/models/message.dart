@@ -19,7 +19,7 @@ class Message extends Equatable {
         mediaUrl = data['mediaUrl'],
         senderId = data['senderId'],
         targetId = data['targetId'],
-        time = data['time'],
+        time = data['time'].toDate(),
         wasSeen = data['wasSeen'];
 
   static Message fromSnapshot(DocumentSnapshot snap) {

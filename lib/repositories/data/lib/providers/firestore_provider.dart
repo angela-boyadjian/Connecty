@@ -23,7 +23,25 @@ class FirestoreProvider extends AProvider {
       }
       return chats;
     } on Exception {
-      throw GetChatsFailure();
+      throw new GetChatsFailure();
+    }
+  }
+
+  @override
+  Future<List<Message>> getMessages(String id) async {
+    print('IN GETMESSAGES IN REPO');
+    try {
+      List<Message> messages = [];
+      var snapshot =
+          await messagesCollection.doc(id).collection('message').get();
+      print('AFTER SNAPSHOT');
+      for (int i = 0; i < snapshot.docs.length; ++i) {
+        messages.add(Message.fromData(snapshot.docs[i].data()));
+      }
+      print('AFTER FOR LOOP');
+      return messages;
+    } on Exception {
+      throw new GetMessagesFailure();
     }
   }
 }
