@@ -10,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data/data_repository.dart';
 import 'package:users/users_repository.dart';
 import 'package:connecty/ui/widgets/avatar.dart';
-import 'package:connecty/ui/screens/chat/chat_screen.dart';
 
 class ChatListItem extends StatelessWidget {
   final Chat chat;

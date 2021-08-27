@@ -55,7 +55,7 @@ class AppRouter {
       case chatRoute:
         final Chat chat = settings.arguments as Chat;
 
-        return PageTransition(
+         return PageTransition(
           child: BlocProvider(
             create: (_) => ChatBloc(dataRepository: _.read<DataRepository>())
               ..add(GetMessages(chat.id)),
