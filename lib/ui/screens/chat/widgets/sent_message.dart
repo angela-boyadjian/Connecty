@@ -65,7 +65,7 @@ class SentMessage extends StatelessWidget {
                 child: Text(
                   time,
                   style: TextStyle(
-                      fontSize: 10, color: Colors.black.withOpacity(0.6)),
+                      fontSize: 10, color: Colors.black.withOpacity(0.8)),
                 ),
               )
             ]),

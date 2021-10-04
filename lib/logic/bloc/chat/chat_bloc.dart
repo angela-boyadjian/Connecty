@@ -11,45 +11,44 @@ part 'chat_event.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final DataRepository _dataRepository;
+  StreamSubscription<List<Message>> _chatSubscription;
+  final String _chatId;
 
   ChatBloc({
     @required DataRepository dataRepository,
+    @required String chatId,
   })  : _dataRepository = dataRepository,
-        super(const ChatState.initial());
+        _chatId = chatId,
+        super(const ChatState.initial()) {
+    _chatSubscription = _dataRepository.messages(_chatId).listen((messages) {
+      add(MessageReceived(messages));
+    });
+  }
 
   @override
   Stream<ChatState> mapEventToState(
     ChatEvent event,
   ) async* {
     yield ChatState.loading();
-    if (event is GetMessages) {
-      print('EVENT IS CALLED');
-      yield* _mapGetToState(event.id);
-    } else if (event is SendMessage) {
+    if (event is SendMessage) {
       yield* _mapSendToState(event.message);
-    }
-  }
-
-  Stream<ChatState> _mapGetToState(String id) async* {
-    try {
-      if (id == null) {
-        yield ChatState.empty();
-      } else {
-        List<Message> messages = await _dataRepository.getMessages(id);
-        print(messages[0].content);
-        yield ChatState.success(messages);
-      }
-    } on Exception {
-      yield ChatState.error();
+    } else if (event is MessageReceived) {
+      yield ChatState.updated(event.message);
     }
   }
 
   Stream<ChatState> _mapSendToState(Message message) async* {
     try {
-      // SendMessage via repository'
-      // yield ChatState.success();
+      await _dataRepository.sendMessage(message, _chatId);
+      yield ChatState.messageSent();
     } on Exception {
       yield ChatState.error();
     }
+  }
+
+  @override
+  Future<void> close() {
+    _chatSubscription.cancel();
+    return super.close();
   }
 }

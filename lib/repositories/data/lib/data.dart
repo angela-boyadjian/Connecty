@@ -6,12 +6,12 @@ import 'models/message.dart';
 class DataRepository {
   FirestoreProvider _provider = FirestoreProvider();
 
-  Future<void> sendMessage(Message message) async =>
-      await _provider.sendMessage(message);
+  Future<void> sendMessage(Message message, String chatId) async =>
+      await _provider.sendMessage(message, chatId);
 
   Future<List<Chat>> getChats(List<String> chatsId) async =>
       await _provider.getChats(chatsId);
 
-  Future<List<Message>> getMessages(String id) async =>
-      await _provider.getMessages(id);
+  Stream<List<Message>> messages(String chatId) =>
+      _provider.messages(chatId);
 }

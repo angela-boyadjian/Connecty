@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:data/data_repository.dart';
-import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:users/users_repository.dart';
+import 'package:connecty/logic/bloc/bloc.dart';
+import 'package:connecty/logic/cubit/cubit.dart';
+import 'package:connecty/constants/constants.dart';
+import 'package:connecty/ui/widgets/custom_progress_indicator.dart';
 
-import './mock.dart' as mock;
+import 'widgets/compose_message.dart';
 import 'widgets/header.dart';
+import 'widgets/sent_message.dart';
+import 'widgets/received_message.dart';
 
 class ChatScreen extends StatefulWidget {
   final Chat chat;
@@ -23,18 +27,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController _text = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _text.dispose();
-    super.dispose();
-  }
 
   int getContactIndex(User user) =>
       widget.chat.usernames[0] == user.name ? 1 : 0;
@@ -64,69 +56,68 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _sendMessageTextField() {
-    return Container(
-      height: 50.0,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: TextField(
-          maxLines: 20,
-          controller: _text,
-          decoration: InputDecoration(
-            suffixIcon: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    print(_text.text);
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    _text.clear();
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.image),
-                  onPressed: () {},
-                ),
-              ],
+  Widget _buildCorrectMessage(bool isSender, Message message) {
+    final f = new DateFormat('HH:mm');
+    String time = f.format(message.time);
+
+    return Align(
+      alignment: Alignment(isSender ? 1 : -1, 0),
+      child: isSender
+          ? SentMessage(
+              content: message.content,
+              time: time,
+              isImage: false,
+            )
+          : ReceivedMessage(
+              content: message.content,
+              time: time,
+              isImage: false,
             ),
-            border: InputBorder.none,
-            hintText: "enter your message",
-          ),
-        ),
-      ),
     );
   }
 
-  _buildChat() {
+  Widget _buildMessages(User user) {
+    return BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
+      switch (state.status) {
+        case ChatStatus.Initial:
+          return Center(child: CustomProgressIndicator());
+        case ChatStatus.Error:
+          return Center(child: Text('Failed to fetch chats'));
+        case ChatStatus.Empty:
+          return Center(child: Text("You don't have chats yet."));
+        case ChatStatus.Success:
+          return ListView.builder(
+            itemCount: state.messages.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) return _lastMessageDate();
+              return _buildCorrectMessage(
+                  user.id == state.messages[index - 1].senderId,
+                  state.messages[index - 1]);
+            },
+          );
+        default:
+          return Center(child: CustomProgressIndicator());
+      }
+    });
+  }
+
+  _buildChat(User user) {
     final theme = context.select((PreferencesCubit cubit) => cubit.theme);
 
     return Flexible(
       fit: FlexFit.tight,
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/chat-background.jpg"),
-            fit: BoxFit.cover,
-            colorFilter: !theme
-                ? ColorFilter.mode(Colors.grey[850], BlendMode.hardLight)
-                : ColorFilter.linearToSrgbGamma(),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/chat-background.jpg"),
+              fit: BoxFit.cover,
+              colorFilter: !theme
+                  ? ColorFilter.mode(Colors.grey[850], BlendMode.hardLight)
+                  : ColorFilter.linearToSrgbGamma(),
+            ),
           ),
-        ),
-        child: ListView.builder(
-          itemCount: mock.childList.length + 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) return _lastMessageDate();
-            if (index == mock.childList.length + 1) {
-              return SizedBox(height: 20.0);
-            }
-            return mock.childList[index - 1];
-          },
-        ),
-      ),
+          child: _buildMessages(user)),
     );
   }
 
@@ -147,9 +138,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Header(widget.chat.usernames[contactIndex],
                       widget.chat.avatars[contactIndex]),
-                  _buildChat(),
+                  _buildChat(user),
                   Divider(height: 0.0, color: Colors.black26),
-                  _sendMessageTextField(),
+                  ComposeMessage(senderId: user.id,
+                    targetId: widget.chat.participantsId[contactIndex]),
                 ],
               ),
             ],

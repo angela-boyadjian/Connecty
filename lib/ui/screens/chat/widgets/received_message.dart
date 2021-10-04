@@ -66,7 +66,7 @@ class ReceivedMessage extends StatelessWidget {
                   time,
                   style: TextStyle(
                     fontSize: 10,
-                    color: Colors.black.withOpacity(0.6),
+                    color: Colors.black.withOpacity(0.8),
                   ),
                 ),
               )

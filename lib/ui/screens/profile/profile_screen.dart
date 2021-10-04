@@ -1,11 +1,10 @@
-import 'package:connecty/ui/widgets/avatar.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
+import 'package:connecty/ui/widgets/avatar.dart';
 import 'package:connecty/constants/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -43,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () =>
                   Navigator.of(context).pushNamed(profileEditRoute),
               child: Text(
-                'EDIT',
+                tr('Edit'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -59,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((UserBloc bloc) => bloc.state.user);
+
     return Scaffold(
       appBar: _buildAppBar(textTheme),
       body: Container(

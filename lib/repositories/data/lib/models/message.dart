@@ -29,7 +29,7 @@ class Message extends Equatable {
       snap.data()['mediaUrl'],
       snap.data()['senderId'],
       snap.data()['targetId'],
-      snap.data()['time'],
+      snap.data()['time'].toDate(),
       snap.data()['wasSeen'],
     );
   }

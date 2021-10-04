@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:data/models/chat.dart';
@@ -9,8 +11,27 @@ class FirestoreProvider extends AProvider {
   final messagesCollection = FirebaseFirestore.instance.collection('messages');
 
   @override
-  Future<void> sendMessage(Message message) async {
-    print("Send message call");
+  Stream<List<Message>> messages(String chatId) {
+    final messageCollection =
+          messagesCollection.doc(chatId).collection('message');
+
+    return messageCollection .orderBy('time').snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Message.fromSnapshot(doc))
+          .toList();
+    });
+  }
+
+  @override
+  Future<void> sendMessage(Message message, String chatId) async {
+    try {
+      final messageCollection =
+          messagesCollection.doc(chatId).collection('message');
+
+      return messageCollection.add(message.toDocument());
+    } on Exception {
+      throw SendMessageFailure();
+    }
   }
 
   @override
@@ -24,24 +45,6 @@ class FirestoreProvider extends AProvider {
       return chats;
     } on Exception {
       throw new GetChatsFailure();
-    }
-  }
-
-  @override
-  Future<List<Message>> getMessages(String id) async {
-    print('IN GETMESSAGES IN REPO');
-    try {
-      List<Message> messages = [];
-      var snapshot =
-          await messagesCollection.doc(id).collection('message').get();
-      print('AFTER SNAPSHOT');
-      for (int i = 0; i < snapshot.docs.length; ++i) {
-        messages.add(Message.fromData(snapshot.docs[i].data()));
-      }
-      print('AFTER FOR LOOP');
-      return messages;
-    } on Exception {
-      throw new GetMessagesFailure();
     }
   }
 }

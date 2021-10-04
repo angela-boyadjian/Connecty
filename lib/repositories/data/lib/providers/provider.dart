@@ -10,13 +10,13 @@ class GetMessagesFailure implements Exception {}
 abstract class AProvider {
   /// Sends [Message] to user.
   /// Throws a [SendMessageFailure] if an exception occurs.
-  Future<void> sendMessage(Message message);
+  Future<void> sendMessage(Message message, String chatId);
 
   /// Fetch [List<Chat>] to user.
   /// Throws a [GetChatsFailure] if an exception occurs.
   Future<List<Chat>> getChats(List<String> chatsId);
 
-  /// Fetch [List<Message>] to user.
+  /// Listens for changes and returns a [List<Message>] to user.
   /// Throws a [GetMessages>Failure] if an exception occurs.
-  Future<List<Message>> getMessages(String id);
+  Stream<List<Message>> messages(String chatId);
 }

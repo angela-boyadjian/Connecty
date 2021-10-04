@@ -12,7 +12,12 @@ class ChatState extends Equatable {
 
   const ChatState.loading() : this._(status: ChatStatus.Loading);
 
+  const ChatState.messageSent() : this._(status: ChatStatus.Success);
+
   const ChatState.success(List<Message> messages)
+      : this._(messages: messages, status: ChatStatus.Success);
+
+  const ChatState.updated(List<Message> messages)
       : this._(messages: messages, status: ChatStatus.Success);
 
   const ChatState.error() : this._(status: ChatStatus.Error);
