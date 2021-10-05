@@ -70,15 +70,15 @@ class Chat extends Equatable {
   static Chat fromSnapshot(DocumentSnapshot snap) {
     return Chat(
       snap.id,
-      snap.data()['avatars'],
+      List<String>.from(snap.data()['avatars']),
       snap.data()['lastMsgContent'],
-      snap.data()['lastMsgDate'],
+      snap.data()['lastMsgDate'].toDate(),
       snap.data()['lastMsgSenderId'],
-      snap.data()['participantsId'],
+      List<String>.from(snap.data()['participantsId']),
       snap.data()['totalMsgs'],
       snap.data()['type'],
       snap.data()['unread'],
-      snap.data()['usernames'],
+      List<String>.from(snap.data()['usernames']),
     );
   }
 

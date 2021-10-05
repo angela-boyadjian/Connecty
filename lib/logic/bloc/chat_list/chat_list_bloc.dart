@@ -12,11 +12,16 @@ part 'chat_list_event.dart';
 class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
   final DataRepository _dataRepository;
   List<Chat> _chats = [];
+  StreamSubscription<List<Chat>> _chatSubscription;
 
   ChatListBloc({
     @required DataRepository dataRepository,
   })  : _dataRepository = dataRepository,
-        super(const ChatListState.initial());
+        super(const ChatListState.initial()) {
+    _chatSubscription = _dataRepository.chats().listen((chats) {
+      add(ChatsUpdated(chats));
+    });
+  }
 
   @override
   Stream<ChatListState> mapEventToState(
@@ -27,6 +32,8 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
       yield* _mapGetToState(event.chatsId);
     } else if (event is OpenChat) {
       yield* _mapOpenToState(event.chatId);
+    } else if (event is ChatsUpdated) {
+      yield* _mapUpdatedToState(event.chats);
     }
   }
 
@@ -45,6 +52,17 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
     }
   }
 
+Stream<ChatListState> _mapUpdatedToState(List<Chat> chats) async* {
+    try {
+        if (chats.isEmpty) {
+        yield ChatListState.empty();
+        } else {
+          yield ChatListState.success(chats);
+        }
+    } on Exception {
+      yield ChatListState.error();
+    }
+  }
   Stream<ChatListState> _mapGetToState(List<String> chatsId) async* {
     try {
       if (chatsId == null) {
@@ -56,5 +74,11 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
     } on Exception {
       yield ChatListState.error();
     }
+  }
+  
+  @override
+  Future<void> close() {
+    _chatSubscription.cancel();
+    return super.close();
   }
 }

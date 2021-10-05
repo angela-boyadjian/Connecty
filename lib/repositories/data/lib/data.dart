@@ -17,4 +17,7 @@ class DataRepository {
 
   Stream<List<Message>> messages(String chatId) =>
       _provider.messages(chatId);
+
+  Stream<List<Chat>> chats() =>
+      _provider.chats();
 }

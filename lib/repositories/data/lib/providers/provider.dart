@@ -2,8 +2,11 @@ import 'package:data/models/chat.dart';
 import 'package:data/models/message.dart';
 
 class SendMessageFailure implements Exception {}
+
 class ReadMessageFailure implements Exception {}
+
 class GetChatsFailure implements Exception {}
+
 class GetMessagesFailure implements Exception {}
 
 abstract class AProvider {
@@ -20,6 +23,8 @@ abstract class AProvider {
   Future<List<Chat>> getChats(List<String> chatsId);
 
   /// Listens for changes and returns a [List<Message>] to user.
-  /// Throws a [GetMessages>Failure] if an exception occurs.
+  Stream<List<Chat>> chats();
+
+  /// Listens for changes and returns a [List<Message>] to user.
   Stream<List<Message>> messages(String chatId);
 }

@@ -13,6 +13,15 @@ class GetChats extends ChatListEvent {
   List<Object> get props => [this.chatsId];
 }
 
+class ChatsUpdated extends ChatListEvent {
+  final List<Chat> chats;
+
+  const ChatsUpdated(this.chats);
+
+  @override
+  List<Object> get props => [this.chats];
+}
+
 class OpenChat extends ChatListEvent {
   final String chatId;
 
