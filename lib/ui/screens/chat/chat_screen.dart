@@ -27,6 +27,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   int getContactIndex(User user) =>
       widget.chat.usernames[0] == user.name ? 1 : 0;
@@ -125,6 +129,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final user = context.select((UserBloc bloc) => bloc.state.user);
     final int contactIndex = getContactIndex(user);
+    if (widget.chat.unread > 0 && widget.chat.lastMsgSenderId != user.id) {
+      context.read<ChatListBloc>().add(OpenChat(widget.chat.id));
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -140,8 +147,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       widget.chat.avatars[contactIndex]),
                   _buildChat(user),
                   Divider(height: 0.0, color: Colors.black26),
-                  ComposeMessage(senderId: user.id,
-                    targetId: widget.chat.participantsId[contactIndex]),
+                  ComposeMessage(
+                      senderId: user.id,
+                      targetId: widget.chat.participantsId[contactIndex]),
                 ],
               ),
             ],

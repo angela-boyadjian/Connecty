@@ -13,12 +13,10 @@ class FirestoreProvider extends AProvider {
   @override
   Stream<List<Message>> messages(String chatId) {
     final messageCollection =
-          messagesCollection.doc(chatId).collection('message');
+        messagesCollection.doc(chatId).collection('message');
 
-    return messageCollection .orderBy('time').snapshots().map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Message.fromSnapshot(doc))
-          .toList();
+    return messageCollection.orderBy('time').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => Message.fromSnapshot(doc)).toList();
     });
   }
 
@@ -27,8 +25,22 @@ class FirestoreProvider extends AProvider {
     try {
       final messageCollection =
           messagesCollection.doc(chatId).collection('message');
-
-      return messageCollection.add(message.toDocument());
+      DocumentSnapshot snap = await chatsCollection.doc(chatId).get();
+      var chat = Chat.fromData(snap.data());
+      var newChat = Chat(
+        chat.id,
+        chat.avatars,
+        message.content,
+        message.time,
+        message.senderId,
+        chat.participantsId,
+        chat.totalMsgs + 1,
+        chat.type,
+        chat.unread + 1,
+        chat.usernames,
+      );
+      await chatsCollection.doc(chatId).set(newChat.toDocument());
+      return await messageCollection.add(message.toDocument());
     } on Exception {
       throw SendMessageFailure();
     }
@@ -45,6 +57,30 @@ class FirestoreProvider extends AProvider {
       return chats;
     } on Exception {
       throw new GetChatsFailure();
+    }
+  }
+
+  @override
+  Future<Chat> readMessage(String chatId) async {
+    try {
+      DocumentSnapshot snap = await chatsCollection.doc(chatId).get();
+      var chat = Chat.fromData(snap.data());
+      var newChat = Chat(
+        chat.id,
+        chat.avatars,
+        chat.lastMsgContent,
+        chat.lastMsgDate,
+        chat.lastMsgSenderId,
+        chat.participantsId,
+        chat.totalMsgs,
+        chat.type,
+        0,
+        chat.usernames,
+      );
+      await chatsCollection.doc(chatId).set(newChat.toDocument());
+      return newChat;
+    } on Exception {
+      throw ReadMessageFailure();
     }
   }
 }

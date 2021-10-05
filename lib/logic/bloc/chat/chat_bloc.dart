@@ -10,9 +10,9 @@ part 'chat_state.dart';
 part 'chat_event.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  final String _chatId;
   final DataRepository _dataRepository;
   StreamSubscription<List<Message>> _chatSubscription;
-  final String _chatId;
 
   ChatBloc({
     @required DataRepository dataRepository,

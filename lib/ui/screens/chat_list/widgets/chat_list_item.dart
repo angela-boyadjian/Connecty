@@ -56,7 +56,7 @@ class ChatListItem extends StatelessWidget {
   Widget _buildTile(BuildContext context) {
     final user = context.select((UserBloc bloc) => bloc.state.user);
     final int contactIndex = getContactIndex(user);
-    final bool isUnread = chat.unread > 0;
+    final bool isUnread = chat.unread > 0 && chat.lastMsgSenderId != user.id;
 
     return ListTile(
       title: Text(

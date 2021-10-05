@@ -3,6 +3,7 @@ part of 'chat_bloc.dart';
 abstract class ChatEvent extends Equatable {
   const ChatEvent();
 }
+
 class MessageReceived extends ChatEvent {
   final List<Message> message;
 

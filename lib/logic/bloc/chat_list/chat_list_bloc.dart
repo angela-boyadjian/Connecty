@@ -11,6 +11,7 @@ part 'chat_list_event.dart';
 
 class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
   final DataRepository _dataRepository;
+  List<Chat> _chats = [];
 
   ChatListBloc({
     @required DataRepository dataRepository,
@@ -24,6 +25,23 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
     yield ChatListState.loading();
     if (event is GetChats) {
       yield* _mapGetToState(event.chatsId);
+    } else if (event is OpenChat) {
+      yield* _mapOpenToState(event.chatId);
+    }
+  }
+
+  Stream<ChatListState> _mapOpenToState(String chatId) async* {
+    try {
+      Chat chat = await _dataRepository.readMessage(chatId);
+      for (int i = 0; i < _chats.length; ++i) {
+        if (_chats[i].id == chat.id) {
+          _chats[i] = chat;
+          break;
+        }
+      }
+      yield ChatListState.success(_chats);
+    } on Exception {
+      yield ChatListState.error();
     }
   }
 
@@ -32,8 +50,8 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
       if (chatsId == null) {
         yield ChatListState.empty();
       } else {
-        List<Chat> chats = await _dataRepository.getChats(chatsId);
-        yield ChatListState.success(chats);
+        _chats = await _dataRepository.getChats(chatsId);
+        yield ChatListState.success(_chats);
       }
     } on Exception {
       yield ChatListState.error();

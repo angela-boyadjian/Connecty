@@ -12,3 +12,12 @@ class GetChats extends ChatListEvent {
   @override
   List<Object> get props => [this.chatsId];
 }
+
+class OpenChat extends ChatListEvent {
+  final String chatId;
+
+  const OpenChat(this.chatId);
+
+  @override
+  List<Object> get props => [this.chatId];
+}

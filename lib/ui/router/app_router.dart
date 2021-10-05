@@ -57,7 +57,8 @@ class AppRouter {
 
          return PageTransition(
           child: BlocProvider(
-            create: (_) => ChatBloc(dataRepository: _.read<DataRepository>(), chatId: chat.id),
+            create: (_) => ChatBloc(dataRepository: _.read<DataRepository>(),
+              chatId: chat.id),
             child: ChatScreen(chat: chat),
           ),
           type: PageTransitionType.fade,
