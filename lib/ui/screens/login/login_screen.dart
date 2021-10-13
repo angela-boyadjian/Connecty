@@ -2,55 +2,27 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:connecty/constants/constants.dart';
-import 'package:connecty/ui/widgets/auth_button.dart';
-import 'package:connecty/ui/widgets/social_button.dart';
+import 'package:connecty/ui/screens/login/widgets/social_button.dart';
+
+import 'widgets/register.dart';
+import 'widgets/sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key}) : super(key: key);
+  final bool isRegister;
+
+  const LoginScreen({Key key, this.isRegister = false}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  Widget horizontalLine() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width / 4,
-          height: 1.0,
-          color: Colors.white.withOpacity(0.6),
-        ),
-      );
-
-  InputDecoration textFieldDecoration(String hintText) => InputDecoration(
-        labelText: hintText,
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: hintText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      );
-
   Widget _buildTitle() {
     return Padding(
       padding: const EdgeInsets.only(top: 0),
@@ -79,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return MultiBlocListener(
       listeners: [
         BlocListener<UserBloc, UserState>(listener: (userContext, state) {
@@ -114,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     colors: [Colors.blue, Colors.orange],
                     begin: Alignment.topCenter,
@@ -127,57 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buildTitle(),
-                    SizedBox(height: 45.0),
-                    TextField(
-                      controller: emailController,
-                      style: textTheme.subtitle1,
-                      decoration: textFieldDecoration(tr('Email')),
-                    ),
-                    SizedBox(height: 25.0),
-                    TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      style: textTheme.subtitle1,
-                      decoration: textFieldDecoration(tr('Password')),
-                    ),
-                    SizedBox(
-                      height: 35.0,
-                    ),
-                    AuthButton(
-                        text: tr('Login'),
-                        onPressed: () => context
-                            .read<LoginCubit>()
-                            .logInWithCredentials(
-                                emailController.text, passwordController.text)),
-                    SizedBox(height: 15.0),
-                    Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            horizontalLine(),
-                            Text(tr('OR'),
-                                style:
-                                    textTheme.subtitle1.copyWith(fontSize: 14)),
-                            horizontalLine()
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15.0),
-                    AuthButton(
-                        text: tr('Register'),
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed(registerRoute)),
-                    SizedBox(height: 60.0),
+                    widget.isRegister ? const Register() : const SignIn(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         SocialButton(
-                            path: "assets/images/facebook.png", onTap: null),
+                            path: 'assets/images/facebook.png',
+                            onTap: () => {}),
                         SocialButton(
-                            path: "assets/images/google.png",
+                            path: 'assets/images/google.png',
                             onTap: () =>
                                 context.read<LoginCubit>().logInWithGoogle()),
                       ],

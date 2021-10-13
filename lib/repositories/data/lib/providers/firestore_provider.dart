@@ -22,7 +22,7 @@ class FirestoreProvider extends AProvider {
 
   @override
   Stream<List<Chat>> chats() {
-     return chatsCollection.orderBy('lastMsgDate').snapshots().map((snapshot) {
+    return chatsCollection.orderBy('lastMsgDate').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => Chat.fromSnapshot(doc)).toList();
     });
   }

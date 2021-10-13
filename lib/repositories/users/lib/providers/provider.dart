@@ -24,4 +24,8 @@ abstract class AProvider {
   /// Updates the provided [User].
   /// Throws a [UpdateUserFailure] if an exception occurs.
   Future<void> updateUser(User user);
+
+  /// Returns a List of [User] which matches the search.
+  /// Throws an SearchUserFailure if an exception occurs.
+  Future<List<User>> searchByName(String toSearch);
 }

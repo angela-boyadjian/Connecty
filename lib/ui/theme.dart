@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final darkTheme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme().apply(
+  textTheme: GoogleFonts.latoTextTheme().apply(
     bodyColor: Colors.white,
     displayColor: Colors.white,
   ),
@@ -18,7 +18,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme(),
+  textTheme: GoogleFonts.latoTextTheme(),
   primarySwatch: Colors.blueGrey,
   primaryColor: Color(0xFF10477a),
   brightness: Brightness.light,

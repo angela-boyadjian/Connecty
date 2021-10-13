@@ -78,7 +78,8 @@ class GeneralSettings extends StatelessWidget {
                         .read<AuthenticationBloc>()
                         .add(AuthenticationLogoutRequested());
                     Navigator.pushNamedAndRemoveUntil(
-                        context, loginRoute, (route) => false);
+                        context, loginRoute, (route) => false,
+                        arguments: false);
                   },
                   child: ListTile(
                     leading: Icon(
