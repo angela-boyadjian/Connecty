@@ -18,8 +18,8 @@ class Button extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32))),
       child: Ink(
         decoration: BoxDecoration(
-            gradient: const LinearGradient(
-                colors: [Color(0xFF043544), Color(0xFF0A85AB)]),
+            gradient: LinearGradient(
+                colors: [Theme.of(context).primaryColor, Color(0xFF0A85AB)]),
             borderRadius: BorderRadius.circular(32)),
         child: Container(
           width: 300,

@@ -61,7 +61,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       _name ?? user.name,
                       _url == null ? user.photo : _url,
                       _bio ?? user.bio,
-                      user.chats);
+                      user.chats, []);
                   context.read<UserBloc>().add(UpdateUser(newUser));
                 }
               },
@@ -139,7 +139,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               case StorageStatus.UploadSuccess:
                 _url = state.path;
                 User newUser = User(user.id, user.email, _name ?? user.name,
-                    _url, _bio ?? user.bio, user.chats);
+                    _url, _bio ?? user.bio, user.chats, []);
                 context.read<UserBloc>().add(UpdateUser(newUser));
                 break;
               case StorageStatus.Error:

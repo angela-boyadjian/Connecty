@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
 
@@ -13,35 +15,54 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<User> queryResultSet = [];
+  List<User> searchResults = [];
   TextEditingController searchController = TextEditingController();
   bool showClear = false;
 
   void searchClear() {
     searchController.clear();
     setState(() {
-      queryResultSet = [];
+      searchResults = [];
       showClear = false;
     });
   }
 
-  void search(String toSearch) async {
-    var res = await context.read<UsersRepository>().searchByName(toSearch);
-    setState(() {
-      queryResultSet = res;
-    });
-  }
+  void onChanged(value) async {
+    var res = await context.read<UsersRepository>().searchByName(value);
 
-  void onChanged(value) {
     if (value.length > 0) {
       setState(() {
+        searchResults = res;
         showClear = true;
       });
     } else {
+      searchController.clear();
       setState(() {
         showClear = false;
+        searchResults = [];
       });
     }
+  }
+
+  noResult() {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Connecty,', style: Theme.of(context).textTheme.headline4),
+          AutoSizeText(
+            tr('search.Title'),
+            // textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                .copyWith(fontWeight: FontWeight.w900),
+            maxLines: 2,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -57,7 +78,6 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: searchController,
               onChanged: onChanged,
               style: theme.textTheme.subtitle1,
-              onFieldSubmitted: search,
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.person_pin,
@@ -79,17 +99,19 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           SizedBox(height: 10.0),
-          GridView.count(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            crossAxisCount: 2,
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
-            primary: false,
-            shrinkWrap: true,
-            children: queryResultSet.map((element) {
-              return ResultCard(element);
-            }).toList(),
-          ),
+          searchResults.isEmpty
+              ? noResult()
+              : GridView.count(
+                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                  primary: false,
+                  shrinkWrap: true,
+                  children: searchResults.map((element) {
+                    return ResultCard(user: element);
+                  }).toList(),
+                ),
         ],
       ),
     );

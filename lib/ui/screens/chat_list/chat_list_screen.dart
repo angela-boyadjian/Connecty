@@ -20,10 +20,8 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   AppBar _buildAppBar(User user) {
     return AppBar(
-      elevation: 0,
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      iconTheme: IconThemeData(color: Colors.white),
       centerTitle: true,
       title: Text(tr('Chats'),
           style: Theme.of(context)

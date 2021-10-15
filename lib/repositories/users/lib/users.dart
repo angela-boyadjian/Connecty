@@ -16,4 +16,10 @@ class UsersRepository {
 
   Future<List<User>> searchByName(String toSearch) async =>
       await _provider.searchByName(toSearch);
+
+  Future<void> addContact(String userId, User toAdd) async =>
+      await _provider.addContact(userId, toAdd);
+
+  Future<void> removeContact(String userId, User toRemove) async =>
+      await _provider.removeContact(userId, toRemove);
 }

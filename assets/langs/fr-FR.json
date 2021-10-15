@@ -19,6 +19,10 @@
     "Logout": "Déconnexion",
     "Informations": "Informations",
     "Security": "Sécurité",
+    "SendMessage": "Envoyer un message",
+    "search": {
+        "Title": "Trouve des utilisateurs pour discuter !"
+    },
     "settings": {
         "Settings": "Paramètres",
         "Account": "Compte",

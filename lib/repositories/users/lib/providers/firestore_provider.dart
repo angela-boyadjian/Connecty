@@ -59,4 +59,26 @@ class FirestoreProvider extends AProvider {
     }
     return users;
   }
+
+  @override
+  Future<void> addContact(String userId, User toAdd) async {
+    try {
+      return usersCollection.doc(userId).update({
+        "contacts": FieldValue.arrayUnion([toAdd.toJson()])
+      });
+    } on Exception {
+      throw AddContactFailure();
+    }
+  }
+
+  @override
+  Future<void> removeContact(String userId, User toRemove) async {
+    try {
+      return usersCollection.doc(userId).update({
+        "contacts": FieldValue.arrayRemove([toRemove.toJson()])
+      });
+    } on Exception {
+      throw RemoveContactFailure();
+    }
+  }
 }

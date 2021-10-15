@@ -1,9 +1,9 @@
-import 'package:connecty/ui/screens/contact_profile/contact_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:data/data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'package:users/users_repository.dart';
 import 'package:authentication/authentication.dart';
 
 import 'package:connecty/logic/bloc/bloc.dart';
@@ -16,7 +16,7 @@ import 'package:connecty/ui/screens/splash/splash_screen.dart';
 import 'package:connecty/ui/screens/profile/profile_screen.dart';
 import 'package:connecty/ui/screens/settings/settings_screen.dart';
 import 'package:connecty/ui/screens/profile_edit/profile_edit_screen.dart';
-import 'package:users/users_repository.dart';
+import 'package:connecty/ui/screens/contact_profile/contact_profile_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {

@@ -92,6 +92,8 @@ class MyApp extends StatelessWidget {
               lazy: false,
               create: (context) =>
                   ChatListBloc(dataRepository: dataRepository)),
+          BlocProvider<ContactsCubit>(
+              lazy: false, create: (context) => ContactsCubit(usersRepository)),
         ],
         child: GestureDetector(
           onTap: () {

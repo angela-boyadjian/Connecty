@@ -17,6 +17,10 @@
     "Informations": "Information",
     "Security": "Security",
     "You": "You",
+    "SendMessage": "Send message",
+    "search": {
+        "Title": "Find users to chat with!"
+    },
     "settings": {
         "Settings": "Settings",
         "Account": "Account",

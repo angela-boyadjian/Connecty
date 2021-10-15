@@ -1,3 +1,4 @@
+import 'package:connecty/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -27,33 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () => Navigator.pushNamed(context, settingsRoute)),
         ],
       );
-
-  Widget _buildBottomBar() => BottomAppBar(
-        color: Colors.transparent,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(30.0),
-            color: Colors.redAccent,
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(profileEditRoute),
-              child: Text(
-                tr('Edit'),
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -79,11 +53,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(user?.email ?? '', style: textTheme.headline6),
               SizedBox(height: 20.0),
               Text(user?.bio ?? '', style: textTheme.headline6),
+              SizedBox(height: 20.0),
+              Button(
+                text: tr('Edit'),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(profileEditRoute),
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(),
     );
   }
 }
