@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:users/users_repository.dart';
 
+import 'package:data/data_repository.dart';
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:connecty/ui/widgets/avatar.dart';
@@ -28,7 +29,7 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
         if (state is ContactsLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is ContactsError) {
-          print("Error in AnimesListCubit");
+          print("Error in Contacts");
         }
         return StatusDialog(user: user, contact: widget.user);
       },
@@ -49,13 +50,23 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
         ],
       );
 
+  Chat getChat() {
+    final chats = context.select((ChatListBloc bloc) => bloc.state.chats);
+
+    return chats
+        .where((chat) =>
+            chat.id ==
+            '8DhpZWp7YmciwN7PaHCE3VTnIbI2+L7AjYHWWvAfQnWCOADDf88cy9Gv2')
+        .first;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final User user = context.select((UserBloc bloc) => bloc.state.user);
+    final User currentUser = context.select((UserBloc bloc) => bloc.state.user);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: _buildAppBar(textTheme, user),
+      appBar: _buildAppBar(textTheme, currentUser),
       body: ListView(
         children: [
           Center(
@@ -71,8 +82,8 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
                 SizedBox(height: 20.0),
                 Button(
                   text: tr('SendMessage'),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(profileEditRoute),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed(chatRoute, arguments: getChat()),
                 ),
               ],
             ),

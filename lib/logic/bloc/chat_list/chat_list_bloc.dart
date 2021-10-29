@@ -37,6 +37,10 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
     }
   }
 
+  Chat getChat(String chatId) {
+    return _chats.where((chat) => chat.id == chatId).first;
+  }
+
   Stream<ChatListState> _mapOpenToState(String chatId) async* {
     try {
       Chat chat = await _dataRepository.readMessage(chatId);
@@ -52,17 +56,18 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
     }
   }
 
-Stream<ChatListState> _mapUpdatedToState(List<Chat> chats) async* {
+  Stream<ChatListState> _mapUpdatedToState(List<Chat> chats) async* {
     try {
-        if (chats.isEmpty) {
+      if (chats.isEmpty) {
         yield ChatListState.empty();
-        } else {
-          yield ChatListState.success(chats);
-        }
+      } else {
+        yield ChatListState.success(chats);
+      }
     } on Exception {
       yield ChatListState.error();
     }
   }
+
   Stream<ChatListState> _mapGetToState(List<String> chatsId) async* {
     try {
       if (chatsId == null) {
@@ -75,7 +80,7 @@ Stream<ChatListState> _mapUpdatedToState(List<Chat> chats) async* {
       yield ChatListState.error();
     }
   }
-  
+
   @override
   Future<void> close() {
     _chatSubscription.cancel();

@@ -27,41 +27,11 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   int getContactIndex(User user) =>
       widget.chat.usernames[0] == user.name ? 1 : 0;
 
-  Widget _lastMessageDate() {
-    return Align(
-      alignment: Alignment(0, 0),
-      child: Container(
-        margin: const EdgeInsets.only(top: 5.0, bottom: 10.0),
-        height: 30.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-            color: Colors.black12,
-            borderRadius: BorderRadius.all(
-              Radius.circular(8.0),
-            )),
-        child: Center(
-          child: Text(
-            tr("Today"),
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                .copyWith(color: Colors.white, fontSize: 12.0),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildCorrectMessage(bool isSender, Message message) {
-    final f = new DateFormat('HH:mm');
+    final f = new DateFormat.MMMMd('en_US').add_Hm();
     String time = f.format(message.time);
 
     return Align(
@@ -91,12 +61,11 @@ class _ChatScreenState extends State<ChatScreen> {
           return Center(child: Text("You don't have chats yet."));
         case ChatStatus.Success:
           return ListView.builder(
-            itemCount: state.messages.length + 1,
+            itemCount: state.messages.length,
             itemBuilder: (BuildContext context, int index) {
-              if (index == 0) return _lastMessageDate();
               return _buildCorrectMessage(
-                  user.id == state.messages[index - 1].senderId,
-                  state.messages[index - 1]);
+                  user.id == state.messages[index].senderId,
+                  state.messages[index]);
             },
           );
         default:
