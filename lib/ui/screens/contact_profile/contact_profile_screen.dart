@@ -1,3 +1,4 @@
+import 'package:connecty/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -50,20 +51,21 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
         ],
       );
 
-  Chat getChat() {
-    final chats = context.select((ChatListBloc bloc) => bloc.state.chats);
-
-    return chats
-        .where((chat) =>
-            chat.id ==
-            '8DhpZWp7YmciwN7PaHCE3VTnIbI2+L7AjYHWWvAfQnWCOADDf88cy9Gv2')
-        .first;
+  Chat getChat(List<Chat> chats, User user) {
+    Iterable<Chat> res =
+        chats.where((chat) => chat.id == getChatId(user.id, widget.user.id));
+    if (res.isEmpty) {
+      // TODO Create new chat
+      return null;
+    }
+    return res.first;
   }
 
   @override
   Widget build(BuildContext context) {
     final User currentUser = context.select((UserBloc bloc) => bloc.state.user);
     final textTheme = Theme.of(context).textTheme;
+    final chats = context.select((ChatListBloc bloc) => bloc.state.chats);
 
     return Scaffold(
       appBar: _buildAppBar(textTheme, currentUser),
@@ -82,8 +84,8 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
                 SizedBox(height: 20.0),
                 Button(
                   text: tr('SendMessage'),
-                  onPressed: () => Navigator.of(context)
-                      .pushNamed(chatRoute, arguments: getChat()),
+                  onPressed: () => Navigator.of(context).pushNamed(chatRoute,
+                      arguments: getChat(chats, currentUser)),
                 ),
               ],
             ),
