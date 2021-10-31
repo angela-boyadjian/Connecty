@@ -37,6 +37,7 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
   fab_circular_menu: ^1.0.2
   alphabet_list_scroll_view: ^2.0.0
+  flare_flutter: ^3.0.2
 
   authentication:
     path: lib/repositories/authentication
@@ -59,4 +60,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/animations/
     - assets/langs/

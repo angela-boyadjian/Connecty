@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 
 import 'package:users/models/user.dart';
+import 'package:connecty/logic/bloc/bloc.dart';
+import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:connecty/constants/constants.dart';
 
 import 'widgets/custom_slidable.dart';
+import 'widgets/no_contacts.dart';
 
 class ContactsScreen extends StatefulWidget {
   ContactsScreen({Key key}) : super(key: key);
@@ -20,12 +24,17 @@ class _ContactsScreenState extends State<ContactsScreen> {
   bool isSliding = false;
   List<Widget> normalList = [];
   List<String> strList = [];
+  List<User> _contacts = [];
   SlidableController slidableController;
   TextEditingController searchController = TextEditingController();
   final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
 
   @override
   void initState() {
+    super.initState();
+    context
+        .read<ContactsCubit>()
+        .fetchList(context.read<UserBloc>().state.user);
     searchController.addListener(() {
       _createSlidableList();
     });
@@ -33,7 +42,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
       onSlideAnimationChanged: handleSlideAnimationChanged,
       onSlideIsOpenChanged: handleSlideIsOpenChanged,
     );
-    super.initState();
   }
 
   void handleSlideAnimationChanged(Animation<double> slideAnimation) {}
@@ -65,32 +73,32 @@ class _ContactsScreenState extends State<ContactsScreen> {
 
   _createSlidableList() {
     normalList = [];
-    List<User> userList = [
-      User(
-          'L7AjYHWWvAfQnWCOADDf88cy9Gv2',
-          'boyadjian.angela@gmail.com',
-          'Angela Boyadjian',
-          'https://lh3.googleusercontent.com/a-/AOh14GjUfYmYe3fdpSSFX4bIx5ywPxbe0J7LtCo_SMcM=s96-c',
-          'I like sushi',
-          null,
-          null),
-      User(
-          'Go6TUkG69ZeLMV3ZPDf9q9iE4Pe2',
-          'test@gmail.com',
-          'Jean Dupont',
-          'https://firebasestorage.googleapis.com/v0/b/connecty-278510.appspot.com/o/Go6TUkG69ZeLMV3ZPDf9q9iE4Pe2%2Fprofile-picture?alt=media&token=ae9ec73c-d5fe-4bac-bc12-123141f6d1ce',
-          'Hello',
-          null,
-          null),
-    ];
+    // List<User> userList = [
+    //   User(
+    //       'L7AjYHWWvAfQnWCOADDf88cy9Gv2',
+    //       'boyadjian.angela@gmail.com',
+    //       'Angela Boyadjian',
+    //       'https://lh3.googleusercontent.com/a-/AOh14GjUfYmYe3fdpSSFX4bIx5ywPxbe0J7LtCo_SMcM=s96-c',
+    //       'I like sushi',
+    //       null,
+    //       null),
+    //   User(
+    //       'Go6TUkG69ZeLMV3ZPDf9q9iE4Pe2',
+    //       'test@gmail.com',
+    //       'Jean Dupont',
+    //       'https://firebasestorage.googleapis.com/v0/b/connecty-278510.appspot.com/o/Go6TUkG69ZeLMV3ZPDf9q9iE4Pe2%2Fprofile-picture?alt=media&token=ae9ec73c-d5fe-4bac-bc12-123141f6d1ce',
+    //       'Hello',
+    //       null,
+    //       null),
+    // ];
     strList = [];
 
     if (searchController.text.isNotEmpty) {
-      userList.retainWhere((item) => (item.name)
+      _contacts.retainWhere((item) => (item.name)
           .toLowerCase()
           .contains(searchController.text.toLowerCase()));
     }
-    userList.forEach((user) {
+    _contacts.forEach((user) {
       normalList.add(
         CustomSlidable(
             contact: user,
@@ -178,17 +186,35 @@ class _ContactsScreenState extends State<ContactsScreen> {
     );
   }
 
+  Widget _buildContacts() {
+    return BlocBuilder<ContactsCubit, ContactsState>(
+      builder: (context, state) {
+        if (state is ContactsLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is ContactsError) {
+          return Center(child: Text("Contacts failed"));
+        } else if (state is ContactsSuccess) {
+          _contacts = state.contacts;
+          return _contacts.isEmpty ? NoContacts() : _contactsList();
+        }
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-        appBar: _buildAppBar(textTheme),
-        body: SafeArea(
-            child: Column(
+      appBar: _buildAppBar(textTheme),
+      body: SafeArea(
+        child: Column(
           children: [
-            _contactsList(),
+            _buildContacts(),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
