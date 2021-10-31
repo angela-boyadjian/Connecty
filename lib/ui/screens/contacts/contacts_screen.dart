@@ -20,7 +20,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
   bool isSliding = false;
   List<Widget> normalList = [];
   List<String> strList = [];
-  bool isFav = false;
   SlidableController slidableController;
   TextEditingController searchController = TextEditingController();
   final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
@@ -57,19 +56,11 @@ class _ContactsScreenState extends State<ContactsScreen> {
               onPressed: () => Navigator.pushNamed(context, settingsRoute)),
         ],
       );
-  handleFabKey() {
+
+  void handleFabKey() {
     if (fabKey.currentState.isOpen) {
       fabKey.currentState.close();
     }
-  }
-
-  _toggleItem() {
-    setState(() {
-      setState(() {
-        isFav = !isFav;
-      });
-      print('toggle favorite $isFav');
-    });
   }
 
   _createSlidableList() {
@@ -103,9 +94,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
       normalList.add(
         CustomSlidable(
             contact: user,
-            onChanged: (bool selected) {
-              _toggleItem();
-            },
             onDelete: () {
               print('delete callback');
             },
@@ -151,7 +139,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
     );
   }
 
-  _contactsList() {
+  Widget _contactsList() {
     _createSlidableList();
     return Expanded(
       child: Stack(

@@ -54,7 +54,7 @@ class NoItemsFound extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          "No connection found",
+          "No contact found",
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey[900].withOpacity(0.7),
