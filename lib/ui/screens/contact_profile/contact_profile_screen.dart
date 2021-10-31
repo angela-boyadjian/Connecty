@@ -15,9 +15,9 @@ import 'package:connecty/constants/constants.dart';
 import 'widgets/status_dialog.dart';
 
 class ContactProfileScreen extends StatefulWidget {
-  final User user;
+  final User contact;
 
-  ContactProfileScreen({Key key, this.user}) : super(key: key);
+  ContactProfileScreen({Key key, this.contact}) : super(key: key);
 
   @override
   _ContactProfileScreenState createState() => _ContactProfileScreenState();
@@ -32,7 +32,7 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
         } else if (state is ContactsError) {
           print("Error in Contacts");
         }
-        return StatusDialog(user: user, contact: widget.user);
+        return StatusDialog(user: user, contact: widget.contact);
       },
     );
   }
@@ -44,7 +44,7 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text(widget.user.name,
+        title: Text(widget.contact.name,
             style: textTheme.headline5.copyWith(color: Colors.white)),
         actions: [
           _buildListIcon(user),
@@ -53,10 +53,25 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
 
   Chat getChat(List<Chat> chats, User user) {
     Iterable<Chat> res =
-        chats.where((chat) => chat.id == getChatId(user.id, widget.user.id));
+        chats.where((chat) => chat.id == getChatId(user.id, widget.contact.id));
     if (res.isEmpty) {
-      // TODO Create new chat
-      return null;
+      String chatId = getChatId(user.id, widget.contact.id);
+      Chat newChat = Chat(
+        chatId,
+        [user.photo, widget.contact.photo],
+        '',
+        new DateTime.now(),
+        '',
+        [user.id, widget.contact.id],
+        0,
+        'FRIEND',
+        0,
+        [user.name, widget.contact.name],
+      );
+      context
+          .read<ChatListBloc>()
+          .add(CreateChat(newChat, user.chats, widget.contact.chats));
+      return newChat;
     }
     return res.first;
   }
@@ -77,10 +92,10 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 40.0),
-                  child: Avatar(url: widget.user.photo, size: 70.0),
+                  child: Avatar(url: widget.contact.photo, size: 70.0),
                 ),
                 SizedBox(height: 20.0),
-                Text(widget.user.email ?? '', style: textTheme.headline6),
+                Text(widget.contact.email ?? '', style: textTheme.headline6),
                 SizedBox(height: 20.0),
                 Button(
                   text: tr('SendMessage'),

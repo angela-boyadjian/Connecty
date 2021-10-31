@@ -1,3 +1,4 @@
+import 'package:authentication/authentication.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,7 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buildTitle(),
-                    widget.isRegister ? const Register() : const SignIn(),
+                    widget.isRegister
+                        ? BlocProvider(
+                            create: (context) => RegisterCubit(
+                              context.read<AuthenticationRepository>(),
+                            ),
+                            child: const Register(),
+                          )
+                        : const SignIn(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[

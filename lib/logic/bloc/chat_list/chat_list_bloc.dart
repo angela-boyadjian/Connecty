@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:data/data_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
+import 'package:data/data_repository.dart';
 import 'package:connecty/constants/constants.dart';
-import 'package:flutter/material.dart';
 
 part 'chat_list_state.dart';
 part 'chat_list_event.dart';
@@ -34,11 +34,24 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
       yield* _mapOpenToState(event.chatId);
     } else if (event is ChatsUpdated) {
       yield* _mapUpdatedToState(event.chats);
+    } else if (event is CreateChat) {
+      yield* _mapCreateToState(event.chat, event.userChats, event.contactChats);
     }
   }
 
   Chat getChat(String chatId) {
     return _chats.where((chat) => chat.id == chatId).first;
+  }
+
+  Stream<ChatListState> _mapCreateToState(
+      Chat chat, List<String> userChats, List<String> contactChats) async* {
+    try {
+      await _dataRepository.createChat(chat, userChats, contactChats);
+      _chats.add(chat);
+      yield ChatListState.success(_chats);
+    } on Exception {
+      yield ChatListState.error();
+    }
   }
 
   Stream<ChatListState> _mapOpenToState(String chatId) async* {

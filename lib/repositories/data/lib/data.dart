@@ -15,9 +15,11 @@ class DataRepository {
   Future<Chat> readMessage(String chatId) async =>
       await _provider.readMessage(chatId);
 
-  Stream<List<Message>> messages(String chatId) =>
-      _provider.messages(chatId);
+  Future<void> createChat(
+          Chat chat, List<String> userChats, List<String> contactChats) async =>
+      await _provider.createChat(chat, userChats, contactChats);
 
-  Stream<List<Chat>> chats() =>
-      _provider.chats();
+  Stream<List<Message>> messages(String chatId) => _provider.messages(chatId);
+
+  Stream<List<Chat>> chats() => _provider.chats();
 }

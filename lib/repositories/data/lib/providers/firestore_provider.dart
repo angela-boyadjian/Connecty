@@ -8,6 +8,7 @@ import 'package:data/providers/provider.dart';
 
 class FirestoreProvider extends AProvider {
   final chatsCollection = FirebaseFirestore.instance.collection('chats');
+  final usersCollection = FirebaseFirestore.instance.collection('users');
   final messagesCollection = FirebaseFirestore.instance.collection('messages');
 
   @override
@@ -88,6 +89,22 @@ class FirestoreProvider extends AProvider {
       return newChat;
     } on Exception {
       throw ReadMessageFailure();
+    }
+  }
+
+  @override
+  Future<void> createChat(
+      Chat chat, List<String> userChats, List<String> contactChats) async {
+    try {
+      await chatsCollection.doc(chat.id).set(chat.toDocument());
+      userChats.add(chat.id);
+      usersCollection.doc(chat.participantsId[0]).update({"chats": userChats});
+      contactChats.add(chat.id);
+      usersCollection
+          .doc(chat.participantsId[1])
+          .update({"chats": contactChats});
+    } on Exception {
+      throw CreateChatFailure();
     }
   }
 }

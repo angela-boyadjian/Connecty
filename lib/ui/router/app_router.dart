@@ -62,7 +62,7 @@ class AppRouter {
         final User user = settings.arguments as User;
 
         return PageTransition(
-          child: ContactProfileScreen(user: user),
+          child: ContactProfileScreen(contact: user),
           type: PageTransitionType.bottomToTop,
           duration: Duration(milliseconds: 400),
         );
