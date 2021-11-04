@@ -83,7 +83,7 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
 
   Stream<ChatListState> _mapGetToState(List<String> chatsId) async* {
     try {
-      if (chatsId == null) {
+      if (chatsId == null || chatsId.length == 0) {
         yield ChatListState.empty();
       } else {
         _chats = await _dataRepository.getChats(chatsId);

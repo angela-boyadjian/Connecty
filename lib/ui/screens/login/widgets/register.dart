@@ -60,11 +60,15 @@ class _RegisterState extends State<Register> {
           ),
           const SizedBox(height: 35.0),
           Button(
-              text: tr('Register'),
-              onPressed: () => Navigator.of(context).pushNamed(homeRoute)),
+            text: tr('Register'),
+            onPressed: () => context.read<RegisterCubit>().register(
+                emailController.text,
+                passwordController.text,
+                confirmController.text),
+          ),
           const SizedBox(height: 15.0),
           Button(
-              text: tr('Cancel'),
+              text: tr('utils.Cancel'),
               onPressed: () => Navigator.of(context)
                   .pushNamed(loginRoute, arguments: false)),
           const SizedBox(height: 25.0)

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 
@@ -9,8 +10,8 @@ import 'package:users/models/user.dart';
 import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:connecty/logic/cubit/cubit.dart';
 import 'package:connecty/constants/constants.dart';
+import 'package:connecty/ui/widgets/emptiness.dart';
 
-import 'widgets/no_contacts.dart';
 import 'widgets/custom_slidable.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -177,7 +178,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
           return Center(child: Text("Contacts failed"));
         } else if (state is ContactsSuccess) {
           _contacts = state.contacts;
-          return _contacts.isEmpty ? NoContacts() : _contactsList();
+          return _contacts.isEmpty
+              ? Column(
+                  children: [
+                    SizedBox(height: 50),
+                    Emptiness(tr('emptiness.noContact')),
+                  ],
+                )
+              : _contactsList();
         }
         return Center(child: CircularProgressIndicator());
       },

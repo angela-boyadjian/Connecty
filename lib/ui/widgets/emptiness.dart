@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-class NoContacts extends StatelessWidget {
+class Emptiness extends StatelessWidget {
+  final String message;
+
+  const Emptiness(this.message);
+
   @override
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            height: 50,
-          ),
           Material(
             elevation: 20.0,
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
             child: Container(
+              width: MediaQuery.of(context).size.width - 30,
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
@@ -22,24 +26,23 @@ class NoContacts extends StatelessWidget {
               child: Column(
                 children: [
                   Center(
-                    child: Text('  Emptiness...',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4
-                            .copyWith(fontWeight: FontWeight.bold)),
+                    child: Text(
+                      tr('emptiness.title'),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Center(
-                    child: Text(
-                        'Go on the search page to find users to add to your contacts!',
+                    child: Text(message,
                         style: Theme.of(context).textTheme.bodyText1),
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(
-            height: 50,
-          ),
+          SizedBox(height: 20),
           Container(
               height: 400.0,
               child: FlareActor(

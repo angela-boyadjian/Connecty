@@ -1,3 +1,4 @@
+import 'package:connecty/ui/widgets/emptiness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -48,7 +49,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         case ChatStatus.Error:
           return Center(child: Text('Failed to fetch chats'));
         case ChatStatus.Empty:
-          return Center(child: Text("You don't have chats yet."));
+          return Emptiness(tr('emptiness.noChat'));
         case ChatStatus.Success:
           return ListView.builder(
             itemCount: state.chats.length,
@@ -73,16 +74,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
         body: Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Container(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.3),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0),
-                ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.3),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
               ),
-              child: _buildChats(user),
             ),
+            child: _buildChats(user),
           ),
         ),
       ),

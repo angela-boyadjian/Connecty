@@ -20,6 +20,11 @@
     "Security": "Security",
     "You": "You",
     "SendMessage": "Send message",
+    "emptiness": {
+        "title": " Emptiness...",
+        "noContact": "Go on the search page to find users to add to your contacts!",
+        "noChat": "You don't have any chats yet"
+    },
     "search": {
         "Title": "Find users to chat with!"
     },

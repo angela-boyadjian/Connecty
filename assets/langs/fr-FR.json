@@ -22,6 +22,11 @@
     "Informations": "Informations",
     "Security": "Sécurité",
     "SendMessage": "Envoyer un message",
+    "emptiness": {
+        "title": " Vide...",
+        "noContact": "Allez sur la page de recherche pour ajouter des contacts !",
+        "noChat": "Vous n'avez pas encore de conversations."
+    },
     "search": {
         "Title": "Trouve des utilisateurs pour discuter !"
     },
