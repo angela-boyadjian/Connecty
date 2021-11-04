@@ -51,27 +51,33 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
         ],
       );
 
+  Chat getNewChat(User user, String chatId) {
+    Chat newChat = Chat(
+      chatId,
+      [user.photo, widget.contact.photo],
+      '',
+      new DateTime.now(),
+      '',
+      [user.id, widget.contact.id],
+      0,
+      'FRIEND',
+      0,
+      [user.name, widget.contact.name],
+    );
+    context
+        .read<ChatListBloc>()
+        .add(CreateChat(newChat, user.chats, widget.contact.chats));
+    return newChat;
+  }
+
   Chat getChat(List<Chat> chats, User user) {
-    Iterable<Chat> res =
-        chats.where((chat) => chat.id == getChatId(user.id, widget.contact.id));
+    String chatId = getChatId(user.id, widget.contact.id);
+    if (chats == null) {
+      return getNewChat(user, chatId);
+    }
+    Iterable<Chat> res = chats.where((chat) => chat.id == chatId);
     if (res.isEmpty) {
-      String chatId = getChatId(user.id, widget.contact.id);
-      Chat newChat = Chat(
-        chatId,
-        [user.photo, widget.contact.photo],
-        '',
-        new DateTime.now(),
-        '',
-        [user.id, widget.contact.id],
-        0,
-        'FRIEND',
-        0,
-        [user.name, widget.contact.name],
-      );
-      context
-          .read<ChatListBloc>()
-          .add(CreateChat(newChat, user.chats, widget.contact.chats));
-      return newChat;
+      return getNewChat(user, chatId);
     }
     return res.first;
   }
