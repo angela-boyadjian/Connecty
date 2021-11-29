@@ -1,3 +1,4 @@
+import 'package:connecty/ui/widgets/background.dart';
 import 'package:connecty/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:connecty/ui/widgets/avatar.dart';
 import 'package:connecty/ui/widgets/button.dart';
 import 'package:connecty/constants/constants.dart';
 
+import 'widgets/level_container.dart';
 import 'widgets/status_dialog.dart';
 
 class ContactProfileScreen extends StatefulWidget {
@@ -88,30 +90,33 @@ class _ContactProfileScreenState extends State<ContactProfileScreen> {
     final textTheme = Theme.of(context).textTheme;
     final chats = context.select((ChatListBloc bloc) => bloc.state.chats);
 
-    return Scaffold(
-      appBar: _buildAppBar(textTheme, currentUser),
-      body: ListView(
-        children: [
-          Center(
+    return Background(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(textTheme, currentUser),
+        body: SingleChildScrollView(
+          child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 40.0),
                   child: Avatar(url: widget.contact.photo, size: 70.0),
                 ),
                 SizedBox(height: 20.0),
-                Text(widget.contact.email ?? '', style: textTheme.headline6),
+                Text(widget.contact.bio,
+                    style: textTheme.headline5
+                        .copyWith(fontWeight: FontWeight.bold)),
                 SizedBox(height: 20.0),
                 Button(
                   text: tr('SendMessage'),
                   onPressed: () => Navigator.of(context).pushNamed(chatRoute,
                       arguments: getChat(chats, currentUser)),
                 ),
+                LevelContainer(),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:connecty/ui/widgets/background.dart';
 import 'package:connecty/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,33 +34,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((UserBloc bloc) => bloc.state.user);
 
-    return Scaffold(
-      appBar: _buildAppBar(textTheme),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Avatar(url: user?.photo, size: 70.0),
-              ),
-              SizedBox(height: 20.0),
-              Text(user?.name ?? '',
-                  style: textTheme.headline5
-                      .copyWith(fontWeight: FontWeight.bold)),
-              SizedBox(height: 20.0),
-              Text(user?.email ?? '', style: textTheme.headline6),
-              SizedBox(height: 20.0),
-              Text(user?.bio ?? '', style: textTheme.headline6),
-              SizedBox(height: 20.0),
-              Button(
-                text: tr('Edit'),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(profileEditRoute),
-              ),
-            ],
+    return Background(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(textTheme),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: Avatar(url: user?.photo, size: 70.0),
+                ),
+                SizedBox(height: 20.0),
+                Text(user?.name ?? '',
+                    style: textTheme.headline5
+                        .copyWith(fontWeight: FontWeight.bold)),
+                SizedBox(height: 20.0),
+                Text(user?.email ?? '', style: textTheme.headline6),
+                SizedBox(height: 20.0),
+                Text(user?.bio ?? '', style: textTheme.headline6),
+                SizedBox(height: 20.0),
+                Button(
+                  text: tr('Edit'),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(profileEditRoute),
+                ),
+              ],
+            ),
           ),
         ),
       ),

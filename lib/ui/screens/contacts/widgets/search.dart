@@ -16,17 +16,20 @@ class MyTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         focusNode: focusNode,
-        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+        style: TextStyle(fontSize: 16, color: Colors.white),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).primaryColorLight),
             borderRadius: BorderRadius.circular(25.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Theme.of(context).accentColor),
+            borderSide: BorderSide(color: Colors.white),
             borderRadius: BorderRadius.circular(25.0),
           ),
-          suffixIcon: Icon(Icons.search),
+          suffixIcon: Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
           border: InputBorder.none,
           hintText: tr("Search"),
           contentPadding: const EdgeInsets.only(
@@ -47,18 +50,11 @@ class NoItemsFound extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Icon(
-          FontAwesomeIcons.userAltSlash,
-          size: 24,
-          color: Colors.grey[900].withOpacity(0.7),
-        ),
+        Icon(FontAwesomeIcons.userAltSlash, size: 24),
         const SizedBox(width: 10),
         Text(
           "No contact found",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[900].withOpacity(0.7),
-          ),
+          style: TextStyle(fontSize: 16),
         ),
       ],
     );

@@ -1,3 +1,5 @@
+import 'package:connecty/ui/widgets/custom_divider.dart';
+import 'package:connecty/ui/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,8 @@ import 'package:connecty/logic/cubit/preferences/preferences_cubit.dart';
 class GeneralSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Padding(
@@ -21,8 +25,7 @@ class GeneralSettings extends StatelessWidget {
                   .subtitle1
                   .copyWith(fontWeight: FontWeight.bold)),
         ),
-        Card(
-          elevation: 2.0,
+        GlassMorphism(
           child: Column(
             children: <Widget>[
               GestureDetector(
@@ -36,6 +39,7 @@ class GeneralSettings extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 onTap: () {
                   var data = EasyLocalization.of(context);
@@ -56,6 +60,7 @@ class GeneralSettings extends StatelessWidget {
                           package: 'country_icons', height: 40, width: 40),
                 ),
               ),
+              CustomDivider(width: width),
               ListTile(
                 leading: Icon(
                   FontAwesomeIcons.solidSun,
@@ -72,6 +77,7 @@ class GeneralSettings extends StatelessWidget {
                   },
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                   onTap: () {
                     context

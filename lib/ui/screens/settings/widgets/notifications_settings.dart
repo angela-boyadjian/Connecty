@@ -1,9 +1,13 @@
+import 'package:connecty/ui/widgets/custom_divider.dart';
+import 'package:connecty/ui/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class NotificationSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Padding(
@@ -14,8 +18,7 @@ class NotificationSettings extends StatelessWidget {
                   .subtitle1
                   .copyWith(fontWeight: FontWeight.bold)),
         ),
-        Card(
-          elevation: 2.0,
+        GlassMorphism(
           child: Column(
             children: <Widget>[
               ListTile(
@@ -26,6 +29,7 @@ class NotificationSettings extends StatelessWidget {
                 title: Text(tr('settings.Pause_All')),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
+              CustomDivider(width: width),
               ListTile(
                 leading: Icon(
                   Icons.favorite,
@@ -34,6 +38,7 @@ class NotificationSettings extends StatelessWidget {
                 title: Text(tr("settings.Likes")),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
+              CustomDivider(width: width),
               ListTile(
                 leading: Icon(
                   Icons.star,
@@ -42,6 +47,7 @@ class NotificationSettings extends StatelessWidget {
                 title: Text(tr("settings.Follow")),
                 trailing: Switch(value: true, onChanged: (val) {}),
               ),
+              CustomDivider(width: width),
               ListTile(
                 leading: Icon(
                   Icons.message,

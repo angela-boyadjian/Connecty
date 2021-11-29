@@ -1,3 +1,5 @@
+import 'package:connecty/ui/widgets/custom_divider.dart';
+import 'package:connecty/ui/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Informations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Padding(
@@ -15,8 +19,7 @@ class Informations extends StatelessWidget {
                   .subtitle1
                   .copyWith(fontWeight: FontWeight.bold)),
         ),
-        Card(
-          elevation: 2.0,
+        GlassMorphism(
           child: Column(
             children: <Widget>[
               GestureDetector(
@@ -30,6 +33,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 onTap: () {},
                 child: ListTile(
@@ -41,6 +45,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 onTap: () {},
                 child: ListTile(
@@ -52,6 +57,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 onTap: () {},
                 child: ListTile(
@@ -63,6 +69,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 onTap: () {},
                 child: ListTile(
@@ -74,6 +81,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               GestureDetector(
                 child: ListTile(
                   leading: Icon(
@@ -84,6 +92,7 @@ class Informations extends StatelessWidget {
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
+              CustomDivider(width: width),
               ListTile(
                 leading: Icon(
                   Icons.info,

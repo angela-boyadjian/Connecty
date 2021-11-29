@@ -1,3 +1,4 @@
+import 'package:connecty/ui/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -104,17 +105,16 @@ class _ContactsScreenState extends State<ContactsScreen> {
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-              ),
+              borderSide: BorderSide(color: Colors.white),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(color: Theme.of(context).dividerColor),
+              borderSide: BorderSide(color: Colors.white38),
             ),
             suffix: GestureDetector(
                 onTap: () {
                   if (searchController.text.isEmpty == false) {
+                    _createSlidableList();
                     setState(() {
                       searchController.text = "";
                     });
@@ -122,7 +122,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 },
                 child: Icon(
                   searchController.text.isEmpty ? Icons.search : Icons.cancel,
-                  color: Theme.of(context).primaryColor,
                 )),
             labelText: "Search",
             labelStyle: TextStyle(color: Theme.of(context).dividerColor)),
@@ -155,15 +154,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
               ], icon: Icon(Icons.search), indexedHeaderHeight: (index) => 80),
             ],
           ),
-          isSliding
-              ? Positioned(
-                  right: 0,
-                  top: 70,
-                  child: Container(
-                      width: 50,
-                      height: 50000,
-                      color: Theme.of(context).backgroundColor))
-              : Text(""),
         ],
       ),
     );
@@ -196,13 +186,16 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      appBar: _buildAppBar(textTheme),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildContacts(),
-          ],
+    return Background(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(textTheme),
+        body: SafeArea(
+          child: Column(
+            children: [
+              _buildContacts(),
+            ],
+          ),
         ),
       ),
     );
