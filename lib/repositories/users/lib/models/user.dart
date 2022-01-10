@@ -9,6 +9,7 @@ class User extends Equatable {
   final String bio;
   final List<String> chats;
   final List<User> contacts;
+  final List<String> notifTokens;
 
   const User(
     this.id,
@@ -18,6 +19,7 @@ class User extends Equatable {
     this.bio,
     this.chats,
     this.contacts,
+    this.notifTokens,
   );
 
   User.fromData(Map<String, dynamic> data)
@@ -27,6 +29,9 @@ class User extends Equatable {
         photo = data['photo'],
         bio = data['bio'],
         chats = data['chats'] != null ? List<String>.from(data['chats']) : null,
+        notifTokens = data['notifTokens'] != null
+            ? List<String>.from(data['notifTokens'])
+            : null,
         contacts =
             List<User>.from(data['contacts'].map((x) => User.fromData(x)));
 
@@ -39,6 +44,7 @@ class User extends Equatable {
       'bio': bio,
       'chats': chats,
       'contacts': contacts,
+      'notifTokens': notifTokens,
     };
   }
 
@@ -51,6 +57,7 @@ class User extends Equatable {
       json['bio'] as String,
       json['chats'] as List<String>,
       json['contacts'] as List<User>,
+      json['notifTokens'] as List<String>,
     );
   }
 
@@ -63,6 +70,7 @@ class User extends Equatable {
       snap.data()['bio'],
       snap.data()['chats'],
       snap.data()['contacts'],
+      snap.data()['notifTokens'],
     );
   }
 
@@ -75,6 +83,7 @@ class User extends Equatable {
       'bio': bio,
       'chats': chats,
       'contacts': contacts,
+      'notifTokens': notifTokens,
     };
   }
 
@@ -86,5 +95,6 @@ class User extends Equatable {
         this.bio,
         this.chats,
         this.contacts,
+        this.notifTokens,
       ];
 }

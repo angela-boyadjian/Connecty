@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
               BlocProvider.of<UserBloc>(context).add(
                 AddUser(
                   User(user.id, user.email, user.name, user.photo, 'new user',
-                      [], []),
+                      [], [], []),
                 ),
               );
               break;
