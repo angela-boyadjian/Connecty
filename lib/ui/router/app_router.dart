@@ -44,9 +44,12 @@ class AppRouter {
         );
       case homeRoute:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
+          builder: (context) => BlocProvider(
             create: (context) => TabBloc(),
-            child: Frame(),
+            child: BlocProvider.value(
+              value: context.read<ChatListBloc>(),
+              child: Frame(),
+            ),
           ),
         );
       case chatRoute:

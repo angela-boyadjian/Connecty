@@ -10,6 +10,7 @@
     "Offline": "Offline",
     "Language": "Language",
     "Edit": "Edit",
+    "Skip": "SKIP",
     "Favorite": "Favorite",
     "Delete": "Delete",
     "Chats": "Chats",
@@ -27,6 +28,20 @@
     },
     "search": {
         "Title": "Find users to chat with!"
+    },
+    "tutorial": {
+      "1": {
+        "title": "Welcome to Connecty!",
+        "content": "Communicate smarter, chat better."
+      },
+      "2": {
+        "title": "Contact manager",
+        "content": "Easily manage your contacts."
+      },
+      "3": {
+        "title": "Make new friends",
+        "content": "Search for people in the app and start chatting!"
+      }
     },
     "settings": {
         "Settings": "Settings",

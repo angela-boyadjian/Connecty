@@ -10,6 +10,7 @@
     "Online": "En ligne",
     "Offline": "Hors ligne",
     "Today": "Aujourd'hui",
+    "Skip": "PASSER",
     "Edit": "Modifier",
     "Favorite": "Favoris",
     "Delete": "Supprimer",
@@ -29,6 +30,20 @@
     },
     "search": {
         "Title": "Trouve des utilisateurs pour discuter !"
+    },
+    "tutorial": {
+      "1": {
+        "title": "Bienvenu sur Connecty !",
+        "content": "Plus de visibilité pour mieux communiquer."
+      },
+      "2": {
+        "title": "Gérer vos contacts",
+        "content": "Management de contacts facile."
+      },
+      "3": {
+        "title": "Faites de nouvelles rencontres",
+        "content": "Trouve des utilisateurs pour discuter !"
+      }
     },
     "settings": {
         "Settings": "Paramètres",

@@ -1,3 +1,4 @@
+import 'package:connecty/ui/screens/tutorial/tutorial.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class SplashScreen extends StatelessWidget {
             create: (context) => TabBloc(),
             child: BlocProvider.value(
               value: context.read<ChatListBloc>(),
-              child: Frame(),
+              child: Tutorial(),
             ),
           );
         case AuthenticationStatus.Unauthenticated:
