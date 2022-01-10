@@ -22,3 +22,12 @@ class PreferencesTheme extends PreferencesState {
   @override
   List<Object> get props => [this.theme];
 }
+
+class PreferencesTutorial extends PreferencesState {
+  final bool tutorial;
+
+  PreferencesTutorial(this.tutorial);
+
+  @override
+  List<Object> get props => [this.tutorial];
+}

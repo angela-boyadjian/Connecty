@@ -78,6 +78,22 @@ class GeneralSettings extends StatelessWidget {
                 ),
               ),
               CustomDivider(width: width),
+              ListTile(
+                leading: Icon(
+                  FontAwesomeIcons.graduationCap,
+                  color: Colors.white,
+                ),
+                title: Text(tr('settings.Tutorial')),
+                trailing: BlocBuilder<PreferencesCubit, PreferencesState>(
+                  builder: (context, state) {
+                    return Switch(
+                      value: context.watch<PreferencesCubit>().tutorial,
+                      onChanged: (val) =>
+                          context.read<PreferencesCubit>().setTutorial(val),
+                    );
+                  },
+                ),
+              ),
               GestureDetector(
                   onTap: () {
                     context

@@ -26,11 +26,14 @@ class SplashScreen extends StatelessWidget {
         builder: (context, state) {
       switch (state.status) {
         case AuthenticationStatus.Authenticated:
+          var isTuto = context.watch<PreferencesCubit>().tutorial;
+          print('TUTO == $isTuto');
+
           return BlocProvider(
             create: (context) => TabBloc(),
             child: BlocProvider.value(
               value: context.read<ChatListBloc>(),
-              child: Tutorial(),
+              child: isTuto ? Tutorial() : Frame(),
             ),
           );
         case AuthenticationStatus.Unauthenticated:

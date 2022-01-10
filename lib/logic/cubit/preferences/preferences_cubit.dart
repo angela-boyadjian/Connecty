@@ -9,12 +9,14 @@ part 'preferences_state.dart';
 class PreferencesCubit extends Cubit<PreferencesState> {
   SharedPreferences _prefs;
   bool _theme;
+  bool _tutorial;
 
   PreferencesCubit() : super(PreferencesInitial()) {
     _loadPrefs();
   }
 
   bool get theme => _theme;
+  bool get tutorial => _tutorial;
 
   Future<void> _loadPrefs() async {
     emit(PreferencesLoading());
@@ -32,5 +34,17 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     _prefs.setBool(themePref, newTheme);
     _theme = newTheme;
     emit(PreferencesTheme(newTheme));
+  }
+
+  void loadTutorial() {
+    final bool tutorial = _prefs.getBool(tutorialPref) ?? true;
+    _tutorial = tutorial;
+    emit(PreferencesTutorial(tutorial));
+  }
+
+  void setTutorial(bool newTutorial) {
+    _prefs.setBool(tutorialPref, newTutorial);
+    _tutorial = newTutorial;
+    emit(PreferencesTutorial(newTutorial));
   }
 }

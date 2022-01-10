@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
   ThemeData getTheme(BuildContext context, PreferencesState state) {
     if (state is PreferencesLoaded) {
       context.watch<PreferencesCubit>().loadTheme();
+      context.watch<PreferencesCubit>().loadTutorial();
     }
     if (state is PreferencesTheme) {
       return state.theme ? lightTheme : darkTheme;

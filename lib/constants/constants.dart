@@ -35,3 +35,4 @@ const String contactProfileRoute = '/contactProfile';
 
 // Preferences
 const String themePref = 'theme';
+const String tutorialPref = 'tutorial';
