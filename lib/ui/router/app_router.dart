@@ -1,3 +1,4 @@
+import 'package:connecty/ui/screens/settings/widgets/informations/terms_of_services.dart';
 import 'package:flutter/material.dart';
 import 'package:data/data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,6 +83,12 @@ class AppRouter {
       case settingsRoute:
         return MaterialPageRoute(
           builder: (_) => SettingsScreen(),
+        );
+      case tosRoute:
+        return PageTransition(
+          child: TermsOfService(),
+          type: PageTransitionType.bottomToTop,
+          duration: Duration(milliseconds: 400),
         );
       default:
         return null;

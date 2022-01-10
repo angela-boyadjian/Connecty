@@ -1,3 +1,4 @@
+import 'package:connecty/constants/constants.dart';
 import 'package:connecty/ui/widgets/custom_divider.dart';
 import 'package:connecty/ui/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
@@ -26,32 +27,8 @@ class Informations extends StatelessWidget {
                 onTap: () {},
                 child: ListTile(
                   leading: Icon(
-                    Icons.lock,
-                    color: Colors.green,
-                  ),
-                  title: Text(tr("Security")),
-                  trailing: Icon(Icons.arrow_right),
-                ),
-              ),
-              CustomDivider(width: width),
-              GestureDetector(
-                onTap: () {},
-                child: ListTile(
-                  leading: Icon(
-                    FontAwesomeIcons.ad,
-                    color: Colors.orange,
-                  ),
-                  title: Text(tr("settings.Ads")),
-                  trailing: Icon(Icons.arrow_right),
-                ),
-              ),
-              CustomDivider(width: width),
-              GestureDetector(
-                onTap: () {},
-                child: ListTile(
-                  leading: Icon(
                     Icons.group,
-                    color: Colors.green,
+                    color: Colors.orange,
                   ),
                   title: Text(tr("settings.community.Community_Guidelines")),
                   trailing: Icon(Icons.arrow_right),
@@ -59,13 +36,13 @@ class Informations extends StatelessWidget {
               ),
               CustomDivider(width: width),
               GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.of(context).pushNamed(tosRoute),
                 child: ListTile(
                   leading: Icon(
                     FontAwesomeIcons.gavel,
                     color: Colors.lightGreen,
                   ),
-                  title: Text(tr("settings.tos.Terms_of_Services")),
+                  title: Text(tr("settings.Tos.title")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),
@@ -78,17 +55,6 @@ class Informations extends StatelessWidget {
                     color: Colors.lime,
                   ),
                   title: Text(tr("settings.privacy.Privacy_Policy")),
-                  trailing: Icon(Icons.arrow_right),
-                ),
-              ),
-              CustomDivider(width: width),
-              GestureDetector(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.help,
-                    color: Colors.pink,
-                  ),
-                  title: Text(tr("settings.Help")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),

@@ -18,6 +18,7 @@ class ContactsCubit extends Cubit<ContactsState> {
       _contacts.add(contact);
       emit(ContactsSuccess(contacts: _contacts));
     } on Exception {
+      emit(ContactsError());
       throw ContactsError();
     }
   }
@@ -29,6 +30,7 @@ class ContactsCubit extends Cubit<ContactsState> {
       _contacts.removeWhere((item) => item.id == contact.id);
       emit(ContactsSuccess(contacts: _contacts));
     } on Exception {
+      emit(ContactsError());
       throw ContactsError();
     }
   }
@@ -38,6 +40,7 @@ class ContactsCubit extends Cubit<ContactsState> {
     try {
       List<User> results = user.contacts;
       _contacts = results;
+      // TODO sort list
       emit(ContactsSuccess(contacts: _contacts));
     } on Exception {
       emit(ContactsError());
