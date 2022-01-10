@@ -2,7 +2,6 @@ import 'package:connecty/ui/widgets/background.dart';
 import 'package:connecty/ui/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'widgets/general_settings.dart';

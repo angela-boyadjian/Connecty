@@ -24,13 +24,13 @@ class Informations extends StatelessWidget {
           child: Column(
             children: <Widget>[
               GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.of(context).pushNamed(communityRoute),
                 child: ListTile(
                   leading: Icon(
                     Icons.group,
                     color: Colors.orange,
                   ),
-                  title: Text(tr("settings.community.Community_Guidelines")),
+                  title: Text(tr("settings.Community.title")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),

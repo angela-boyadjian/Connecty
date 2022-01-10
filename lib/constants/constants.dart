@@ -22,12 +22,13 @@ enum StorageStatus { Initial, Loading, UploadSuccess, DownloadSuccess, Error }
 
 // Routes
 const String splashRoute = '/';
+const String tosRoute = '/tos';
 const String homeRoute = '/home';
 const String chatRoute = '/chat';
 const String loginRoute = '/login';
 const String profileRoute = '/profile';
 const String settingsRoute = '/settings';
-const String tosRoute = '/tos';
+const String communityRoute = '/community';
 const String profileEditRoute = '/profileEdit';
 const String contactProfileRoute = '/contactProfile';
 

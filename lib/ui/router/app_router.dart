@@ -1,3 +1,4 @@
+import 'package:connecty/ui/screens/settings/widgets/informations/community_guidelines.dart';
 import 'package:connecty/ui/screens/settings/widgets/informations/terms_of_services.dart';
 import 'package:flutter/material.dart';
 import 'package:data/data_repository.dart';
@@ -87,6 +88,12 @@ class AppRouter {
       case tosRoute:
         return PageTransition(
           child: TermsOfService(),
+          type: PageTransitionType.bottomToTop,
+          duration: Duration(milliseconds: 400),
+        );
+      case communityRoute:
+        return PageTransition(
+          child: CommunityGuidelines(),
           type: PageTransitionType.bottomToTop,
           duration: Duration(milliseconds: 400),
         );
