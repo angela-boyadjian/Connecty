@@ -32,17 +32,8 @@ class NotificationSettings extends StatelessWidget {
               CustomDivider(width: width),
               ListTile(
                 leading: Icon(
-                  Icons.favorite,
-                  color: Colors.pink,
-                ),
-                title: Text(tr("settings.Likes")),
-                trailing: Switch(value: true, onChanged: (val) {}),
-              ),
-              CustomDivider(width: width),
-              ListTile(
-                leading: Icon(
                   Icons.star,
-                  color: Colors.green,
+                  color: Colors.pink,
                 ),
                 title: Text(tr("settings.Follow")),
                 trailing: Switch(value: true, onChanged: (val) {}),

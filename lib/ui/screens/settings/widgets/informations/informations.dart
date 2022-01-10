@@ -48,13 +48,13 @@ class Informations extends StatelessWidget {
               ),
               CustomDivider(width: width),
               GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.of(context).pushNamed(privacyRoute),
                 child: ListTile(
                   leading: Icon(
                     Icons.visibility,
-                    color: Colors.lime,
+                    color: Colors.blueAccent,
                   ),
-                  title: Text(tr("settings.privacy.Privacy_Policy")),
+                  title: Text(tr("settings.Privacy.title")),
                   trailing: Icon(Icons.arrow_right),
                 ),
               ),

@@ -26,6 +26,7 @@ const String tosRoute = '/tos';
 const String homeRoute = '/home';
 const String chatRoute = '/chat';
 const String loginRoute = '/login';
+const String privacyRoute = '/privacy';
 const String profileRoute = '/profile';
 const String settingsRoute = '/settings';
 const String communityRoute = '/community';
