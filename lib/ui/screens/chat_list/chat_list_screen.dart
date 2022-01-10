@@ -1,9 +1,13 @@
+import 'package:connecty/models/notification.dart';
 import 'package:connecty/ui/widgets/background.dart';
 import 'package:connecty/ui/widgets/emptiness.dart';
+import 'package:connecty/ui/widgets/notification_badge.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'package:users/users_repository.dart';
 
@@ -20,6 +24,68 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  NotificationModel _notificationInfo;
+  int _totalNotif = 0;
+
+  @override
+  void initState() {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage msg) {
+      NotificationModel notification = NotificationModel(
+        title: msg.notification.title,
+        body: msg.notification.body,
+        dataTitle: msg.data['title'],
+        dataBody: msg.data['body'],
+      );
+      setState(() {
+        _totalNotif++;
+        _notificationInfo = notification;
+      });
+    });
+
+    registerNotifications();
+    super.initState();
+  }
+
+  void registerNotifications() async {
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permissions');
+
+      // main message
+      FirebaseMessaging.onMessage.listen((RemoteMessage msg) {
+        NotificationModel notification = NotificationModel(
+          title: msg.notification.title,
+          body: msg.notification.body,
+          dataTitle: msg.data['title'],
+          dataBody: msg.data['body'],
+        );
+        setState(() {
+          _totalNotif++;
+          _notificationInfo = notification;
+        });
+
+        if (notification != null) {
+          showSimpleNotification(
+            Text(_notificationInfo.title),
+            leading: NotificationBadge(totalNotification: _totalNotif),
+            subtitle: Text(_notificationInfo.body),
+            background: Colors.cyan.shade700,
+            duration: Duration(seconds: 2),
+          );
+        }
+      });
+    } else {
+      print('Permission declined by user');
+    }
+  }
+
   AppBar _buildAppBar(User user) {
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,

@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:data/data_repository.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:users/users_repository.dart';
 import 'package:storage/storage_repository.dart';
 import 'package:authentication/authentication_repository.dart';
@@ -105,14 +106,16 @@ class MyApp extends StatelessWidget {
           },
           child: BlocBuilder<PreferencesCubit, PreferencesState>(
             builder: (context, state) {
-              return MaterialApp(
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-                debugShowCheckedModeBanner: false,
-                title: 'Connecty',
-                theme: getTheme(context, state),
-                onGenerateRoute: _appRouter.onGenerateRoute,
+              return OverlaySupport.global(
+                child: MaterialApp(
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  debugShowCheckedModeBanner: false,
+                  title: 'Connecty',
+                  theme: getTheme(context, state),
+                  onGenerateRoute: _appRouter.onGenerateRoute,
+                ),
               );
             },
           ),
