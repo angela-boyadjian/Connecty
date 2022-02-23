@@ -134,23 +134,21 @@ class _ChatListScreenState extends State<ChatListScreen> {
   Widget build(BuildContext context) {
     final user = context.select((UserBloc bloc) => bloc.state.user);
 
-    return Background(
-      child: Container(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: _buildAppBar(user),
-          body: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.3),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0),
-                ),
+    return Container(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(user),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.3),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
               ),
-              child: _buildChats(user),
             ),
+            child: _buildChats(user),
           ),
         ),
       ),

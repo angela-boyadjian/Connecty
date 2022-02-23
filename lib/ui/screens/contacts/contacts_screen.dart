@@ -186,16 +186,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Background(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: _buildAppBar(textTheme),
-        body: SafeArea(
-          child: Column(
-            children: [
-              _buildContacts(),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: _buildAppBar(textTheme),
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildContacts(),
+          ],
         ),
       ),
     );

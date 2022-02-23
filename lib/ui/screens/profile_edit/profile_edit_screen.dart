@@ -30,7 +30,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   Widget _buildAppBar() => AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
-            icon: Icon(FontAwesomeIcons.arrowLeft, color: Colors.white),
+            icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
             onPressed: () => Navigator.of(context).pop()),
         centerTitle: true,
         title: Text('Edit',

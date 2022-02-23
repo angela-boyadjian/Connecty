@@ -27,7 +27,6 @@ class SplashScreen extends StatelessWidget {
       switch (state.status) {
         case AuthenticationStatus.Authenticated:
           var isTuto = context.watch<PreferencesCubit>().tutorial;
-          print('TUTO == $isTuto');
 
           return BlocProvider(
             create: (context) => TabBloc(),
