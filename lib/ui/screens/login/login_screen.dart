@@ -55,9 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return MultiBlocListener(
       listeners: [
         BlocListener<UserBloc, UserState>(listener: (userContext, state) {
+          var isTuto = context.read<PreferencesCubit>().tutorial;
+
           switch (state.status) {
             case UserStatus.Success:
-              return Navigator.of(context).pushNamed(homeRoute);
+              return Navigator.of(context)
+                  .pushNamed(isTuto ? tutoRoute : homeRoute);
             case UserStatus.NoUser:
               final user =
                   BlocProvider.of<AuthenticationBloc>(context).state.user;

@@ -24,6 +24,7 @@ enum StorageStatus { Initial, Loading, UploadSuccess, DownloadSuccess, Error }
 const String splashRoute = '/';
 const String tosRoute = '/tos';
 const String homeRoute = '/home';
+const String tutoRoute = '/tuto';
 const String chatRoute = '/chat';
 const String loginRoute = '/login';
 const String privacyRoute = '/privacy';

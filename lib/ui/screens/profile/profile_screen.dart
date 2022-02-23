@@ -1,4 +1,3 @@
-import 'package:connecty/ui/widgets/background.dart';
 import 'package:connecty/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

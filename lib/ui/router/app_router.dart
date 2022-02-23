@@ -1,6 +1,7 @@
 import 'package:connecty/ui/screens/settings/widgets/informations/community_guidelines.dart';
 import 'package:connecty/ui/screens/settings/widgets/informations/privacy_policy.dart';
 import 'package:connecty/ui/screens/settings/widgets/informations/terms_of_services.dart';
+import 'package:connecty/ui/screens/tutorial/tutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:data/data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +52,10 @@ class AppRouter {
               child: Frame(),
             ),
           ),
+        );
+      case tutoRoute:
+        return MaterialPageRoute(
+          builder: (context) => Tutorial(),
         );
       case chatRoute:
         final Chat chat = settings.arguments as Chat;

@@ -29,18 +29,6 @@ class GeneralSettings extends StatelessWidget {
           child: Column(
             children: <Widget>[
               GestureDetector(
-                onTap: () {},
-                child: ListTile(
-                  leading: Icon(
-                    FontAwesomeIcons.userAlt,
-                    color: Colors.blue,
-                  ),
-                  title: Text(tr("settings.Account")),
-                  trailing: Icon(Icons.arrow_right),
-                ),
-              ),
-              CustomDivider(width: width),
-              GestureDetector(
                 onTap: () {
                   var data = EasyLocalization.of(context);
                   Localizations.localeOf(context).languageCode == "en"
