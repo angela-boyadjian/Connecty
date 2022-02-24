@@ -14,8 +14,8 @@ class UsersRepository {
 
   Future<void> updateUser(User user) async => await _provider.updateUser(user);
 
-  Future<List<User>> searchByName(String toSearch) async =>
-      await _provider.searchByName(toSearch);
+  Future<List<User>> searchByName(String toSearch, String username) async =>
+      await _provider.searchByName(toSearch, username);
 
   Future<void> addContact(String userId, User toAdd) async =>
       await _provider.addContact(userId, toAdd);

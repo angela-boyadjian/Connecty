@@ -1,4 +1,3 @@
-import 'package:connecty/ui/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -24,7 +23,9 @@ class ContactsScreen extends StatefulWidget {
 
 class _ContactsScreenState extends State<ContactsScreen> {
   bool isSliding = false;
+  bool showClear = false;
   List<Widget> normalList = [];
+  List<Widget> searchResults = [];
   List<String> strList = [];
   List<User> _contacts = [];
   SlidableController slidableController;
@@ -77,18 +78,11 @@ class _ContactsScreenState extends State<ContactsScreen> {
     normalList = [];
     strList = [];
 
-    if (searchController.text.isNotEmpty) {
-      _contacts.retainWhere((item) => (item.name)
-          .toLowerCase()
-          .contains(searchController.text.toLowerCase()));
-    }
+    _contacts.sort((a, b) => a.name.compareTo(b.name));
     _contacts.forEach((user) {
       normalList.add(
         CustomSlidable(
             contact: user,
-            onDelete: () {
-              print('delete callback');
-            },
             key: Key(user.id),
             controller: slidableController,
             handleFabKey: handleFabKey),
@@ -97,11 +91,47 @@ class _ContactsScreenState extends State<ContactsScreen> {
     });
   }
 
+  void _searchClear() {
+    searchController.clear();
+    _createSlidableList();
+    setState(() {
+      searchResults = [];
+      showClear = false;
+    });
+  }
+
+  void onChanged(value) async {
+    var tmpContacts = _contacts;
+    tmpContacts.retainWhere((item) => (item.name)
+        .toLowerCase()
+        .contains(searchController.text.toLowerCase()));
+    if (value.length > 0) {
+      tmpContacts.sort((a, b) => a.name.compareTo(b.name));
+      tmpContacts.forEach((user) {
+        List<Widget> tmp = [];
+        tmp.add(
+          CustomSlidable(
+              contact: user,
+              key: Key(user.id),
+              controller: slidableController,
+              handleFabKey: handleFabKey),
+        );
+        setState(() {
+          searchResults = tmp;
+          showClear = true;
+        });
+      });
+    } else {
+      _searchClear();
+    }
+  }
+
   Widget _searchBar() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextFormField(
         controller: searchController,
+        onChanged: onChanged,
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
@@ -111,18 +141,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(color: Colors.white38),
             ),
-            suffix: GestureDetector(
-                onTap: () {
-                  if (searchController.text.isEmpty == false) {
-                    _createSlidableList();
-                    setState(() {
-                      searchController.text = "";
-                    });
-                  }
-                },
-                child: Icon(
-                  searchController.text.isEmpty ? Icons.search : Icons.cancel,
-                )),
+            suffixIcon: showClear
+                ? IconButton(
+                    icon: Icon(Icons.clear, color: Colors.white),
+                    onPressed: () => {_searchClear()},
+                  )
+                : null,
             labelText: "Search",
             labelStyle: TextStyle(color: Theme.of(context).dividerColor)),
       ),

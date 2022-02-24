@@ -31,7 +31,7 @@ abstract class AProvider {
 
   /// Returns a List of [User] which matches the search.
   /// Throws an SearchUserFailure if an exception occurs.
-  Future<List<User>> searchByName(String toSearch);
+  Future<List<User>> searchByName(String toSearch, String username);
 
   /// Adds a [User] in contacts list.
   /// Throws an AddContactFailure if an exception occurs.

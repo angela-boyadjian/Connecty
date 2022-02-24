@@ -1,4 +1,4 @@
-import 'package:connecty/ui/widgets/background.dart';
+import 'package:connecty/logic/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -29,8 +29,13 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void onChanged(value) async {
-    var res = await context.read<UsersRepository>().searchByName(value);
+    var res = await context
+        .read<UsersRepository>()
+        .searchByName(value, context.read<UserBloc>().state.user.name);
 
+    res.retainWhere((item) => (item.name)
+        .toLowerCase()
+        .contains(searchController.text.toLowerCase()));
     if (value.length > 0) {
       setState(() {
         searchResults = res;

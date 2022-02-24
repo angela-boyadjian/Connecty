@@ -48,14 +48,16 @@ class FirestoreProvider extends AProvider {
   }
 
   @override
-  Future<List<User>> searchByName(String toSearch) async {
+  Future<List<User>> searchByName(String toSearch, String username) async {
     List<User> users = [];
 
     var data = await usersCollection
         .where('name', isGreaterThanOrEqualTo: toSearch)
         .get();
+
     for (var e in data.docs) {
-      users.add(User.fromData(e.data()));
+      var user = User.fromData(e.data());
+      if (user.name != username) users.add(user);
     }
     return users;
   }
