@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'widgets/general_settings.dart';
 import 'widgets/informations/informations.dart';
-import 'widgets/notifications_settings.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
@@ -22,17 +21,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(title: tr('settings.Settings')),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                GeneralSettings(),
-                NotificationSettings(),
-                Informations(),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              GeneralSettings(),
+              Informations(),
+            ],
           ),
         ),
       ),

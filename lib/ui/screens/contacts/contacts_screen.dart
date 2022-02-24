@@ -62,9 +62,18 @@ class _ContactsScreenState extends State<ContactsScreen> {
         title: Text('Contacts',
             style: textTheme.headline5.copyWith(color: Colors.white)),
         actions: [
-          IconButton(
-              icon: Icon(FontAwesomeIcons.plus, color: Colors.white),
-              onPressed: () => Navigator.pushNamed(context, settingsRoute)),
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: Center(
+              child: Text(
+                _contacts.length.toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ],
       );
 
